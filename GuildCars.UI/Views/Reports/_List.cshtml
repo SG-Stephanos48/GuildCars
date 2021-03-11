@@ -1,0 +1,48 @@
+﻿@model IEnumerable<GuildCars.Models.Queries.VehicleReport>
+
+<table id="txqoh" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+                Year
+            </th>
+            <th>
+                Make
+            </th>
+            <th>
+                Model
+            </th>
+            <th>
+                Count
+            </th>
+            <th>
+                Stock Value
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MfgYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MakeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModelName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Count)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StockValue)
+            </td>
+
+        </tr>
+        }
+    </tbody>
+</table>

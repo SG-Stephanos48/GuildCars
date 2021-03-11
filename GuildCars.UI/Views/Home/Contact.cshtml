@@ -1,0 +1,86 @@
+﻿@model GuildCars.Models.Tables.Contact
+
+@{
+    ViewBag.Title = "Contact";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <br />
+        @using (Html.BeginForm("ContactInsert", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "contactForm" }))
+        {
+            @Html.AntiForgeryToken()
+            <h1>Contact Us</h1>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ContactName, new { @class = "col-md-6 control-label" })
+
+                @Html.TextBoxFor(model => model.ContactName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ContactName)
+
+            </div>
+            <br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, new { @class = "col-md-6 control-label" })
+
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Email)
+
+            </div>
+            <br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.Phone, new { @class = "col-md-6 control-label" })
+
+                @Html.TextBoxFor(model => model.Phone, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Phone)
+
+            </div>
+            <br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.ContactMessage, new { @class = "col-md-6 control-label" })
+
+                @Html.TextAreaFor(model => model.ContactMessage, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ContactMessage)
+
+            </div>
+            <br />
+            <button class="btn btn-primary">Save</button>
+        }
+
+    </div>
+    <div class="col-md-6">
+        <br />
+        <br />
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3353.2014857942995!2d-97.12161804827772!3d32.81342598086766!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864e7e415dd0c027%3A0x9a231a06cf1bc01d!2s11500+S+Pipeline+Rd%2C+Euless%2C+TX+76040!5e0!3m2!1sen!2sus!4v1531084571546"
+                width="800" height="600" frameborder="0" style="border:0" allowfullscreen=""></iframe>
+        <br />
+        <address>
+            11500 S Pipeline Rd<br />
+            Ft Worth, TX 76040<br />
+        </address>
+
+        <address>
+            <strong>Sales:</strong> <a href="mailto:Support@example.com">111-111-1111</a><br />
+            <strong>Service:</strong> <a href="mailto:Marketing@example.com">111-111-1112</a>
+        </address>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#contactForm').validate({
+                rules: {
+                    'Contact.Name': {
+                        required: false
+                    },
+                    'Contact.Messages': {
+                        required: true
+                    }
+
+                }
+            });
+        });
+    </script>
+}

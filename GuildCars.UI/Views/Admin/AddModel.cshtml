@@ -1,0 +1,38 @@
+﻿@model GuildCars.UI.Models.ModelEditViewModel
+
+@{
+    ViewBag.Title = "AddModel";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Models</h1>
+        <br />
+        @using (Html.BeginForm("PostModel", "Admin", FormMethod.Post, new { id = "frmAddModel" }))
+        {
+            <div class="span" style="border: 1px solid black">
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Model</label>
+                            @Html.TextBoxFor(m => m.Model.ModelName, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Make</label>
+                            @Html.DropDownListFor(m => m.Model.MakeId, Model.Make, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div>
+                        <button id="btnAddModel" class="btn btn-default">Save</button>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@Html.Action("_GetModels")

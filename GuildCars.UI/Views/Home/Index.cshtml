@@ -1,0 +1,52 @@
+﻿@model IEnumerable<GuildCars.Models.Tables.Car>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<!--
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">WebSiteName</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">Page 1</a></li>
+            <li><a href="#">Page 2</a></li>
+            <li><a href="#">Page 3</a></li>
+        </ul>
+    </div>
+</nav>
+-->
+
+<div class="container">
+    <div class="jumbotron" style="background-image: url(../../images/)">
+        <h1>BIG HUGE SALE</h1>
+        <p class="lead">      Come on down!</p>
+        <p></p>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Featured Vehicles</h1>
+
+            @foreach (var car in Model)
+            {
+                if (car.Feature == true)
+                {
+                    <div class="col-md-3">
+                        <div class="span" style="border: 1px solid black">
+                            <p class="featurelisting"><img src="@Url.Content("~/images/" + car.ImageFileName)" /></p>
+                            <p class="featurelisting">@car.MfgYear @car.MakeName @car.ModelName</p>
+                            <p class="featurelisting">@car.SalesPrice.ToString("c")</p>
+                            <p class="featurelisting">@Html.ActionLink("view details", "Details", "Inventory", new { carId = @car.CarId }, null)</p>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+</div>
+

@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "Hidden";
+}
+
+<h2>Hidden Pages</h2>
+
+<br />
+<br />
+
+@Html.ActionLink("Add Specials", "AddSpecials", "Admin", null, null)  -- Good
+
+<br />
+<br />
+
+@Html.ActionLink("Add Model", "AddModel", "Admin", null, null)  -- Good
+
+<br />
+<br />
+
+@Html.ActionLink("Add Make", "AddMake", "Admin", null, null)  -- Good
+
+<br />
+<br />
+
+@Html.ActionLink("Add Vehicle", "AddVehicle", "Admin", null, null) -- 95% done, Figure out why ddl not passing values
+
+<br />
+<br />
+
+@Html.ActionLink("Edit Vehicle", "EditVehicle", "Admin", null, null) -- Good
+
+<br />
+<br />
+
+@Html.ActionLink("Purchase", "Purchase", "Sales", null, null) -- 90% done, Wire up button
+
+<br />
+<br />
+
+@Html.ActionLink("Get Users", "Users", "Admin", null, null) -- Good
+
+<br />
+<br />
+
+@Html.ActionLink("Add User", "AddUser", "Admin", null, null) -- 90% done, Work out return value for UserId
+
+<br />
+<br />
+
+@Html.ActionLink("Edit User", "EditUser", "Admin", null, null) -- 70% done
+
+<br />
+<br />
+
+@Html.ActionLink("Change Password", "ChangePassword", "Manage", null, null) -- Good
+
+<br />
+<br />
+
+@Html.ActionLink("Reports", "Index", "Reports", null, null) -- Good
+
+<br />
+<br />
+
+@Html.ActionLink("Inventory Report", "Inventory", "Reports", null, null) -- Good
+
+<br />
+<br />
+
+@Html.ActionLink("Sales Report", "Sales", "Reports", null, null) -- 50% Done

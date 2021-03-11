@@ -1,0 +1,40 @@
+﻿@model GuildCars.Models.Tables.Special
+
+@{
+    ViewBag.Title = "Specials";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Specials</h1>
+        <br />
+        @using (Html.BeginForm("PostSpecial", "Admin", FormMethod.Post, new { id = "frmAddSpecial" }))
+        {
+            <div class="span" style="border: 1px solid black">
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Title</label>
+                            @Html.TextBoxFor(m => m.Title)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Description</label>
+                            @Html.TextBoxFor(m => m.SpecialDescription)
+                        </div>
+                    </div>
+
+                    <div>
+                        <button id="btnAddSpecial" class="btn btn-default">Save</button>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<br />
+
+@Html.Action("_GetSpecialList")

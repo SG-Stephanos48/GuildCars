@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Inventory";
+}
+
+<h2>Inventory Report</h2>
+
+<h3>New Vehicles</h3>
+
+@Html.Action("_GetNew")
+
+<h3>Used Vehicles</h3>
+
+@Html.Action("_GetUsed")

@@ -1,0 +1,35 @@
+﻿@model GuildCars.Models.Tables.Make
+
+@{
+    ViewBag.Title = "AddMake";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Makes</h1>
+        <br />
+        @using (Html.BeginForm("PostMake", "Admin", FormMethod.Post, new { id = "frmAddMake" }))
+        {
+            
+                <br />
+                <div class="col-md-12">
+                    <div class="span" style="border: 1px solid black">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>New Make</label>
+                                @Html.TextBoxFor(m => m.MakeName)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div>
+                                <button id="btnAddMake" class="btn btn-default">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        }
+    </div>
+</div>
+
+@Html.Action("_GetMakes")
+

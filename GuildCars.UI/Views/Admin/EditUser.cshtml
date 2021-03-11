@@ -1,0 +1,52 @@
+﻿@model GuildCars.UI.Models.UserEditViewModel
+
+@{
+    ViewBag.Title = "EditUser";
+}
+
+<div class="row">
+
+    <div class="col-md-12">
+        <h1>Edit User</h1>
+        <br />
+        @using (Html.BeginForm("EditUserPost", "Admin", FormMethod.Post, new { id = "frmEditUser" }))
+        {
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>First Name</label>
+                    @Html.TextBoxFor(m => m.User.FirstName)
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    @Html.TextBoxFor(m => m.User.Email)
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    @Html.TextBoxFor(m => m.User.Password)
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Last Name</label>
+                    @Html.TextBoxFor(m => m.User.LastName)
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    @Html.DropDownListFor(m => m.User.Role, Model.Role, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    @Html.TextBoxFor(m => m.User.PasswordConfirmed)
+                </div>
+            </div>
+
+            <div class="row">
+                <div>
+                    <button id="btnEditUser" class="btn btn-default">Save</button>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+

@@ -1,0 +1,159 @@
+﻿@model GuildCars.UI.Models.VehicleAddViewModel
+
+@{
+    ViewBag.Title = "AddVehicle";
+}
+
+<div class="row">
+
+    <div class="col-md-12">
+        <h1>Add Vehicle</h1>
+        <br />
+        @using (Html.BeginForm("PostVehicle", "Admin", FormMethod.Post, new { id = "frmAddVehicle" }))
+        {
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Make</label>
+                    @Html.DropDownListFor(m => m.Car.MakeId, Model.Make, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label for="CarType" class="col-md-2 control-label">Type:</label><br />
+                    <div class="col-md-4">
+                        <select class="form-control" id="CarType" name="CarType">
+                            <option value="">- Select CarType -</option>
+                            <option value="New">New</option>
+                            <option value="Used">Used</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Year</label>
+                    @Html.TextBoxFor(m => m.Car.MfgYear)
+                </div>
+                <div class="form-group">
+                    <label for="Color" class="col-md-2 control-label">Color:</label>
+                    <div class="col-md-4">
+                        <select class="form-control" id="Color" name="Color">
+                            <option value="">- Select Color -</option>
+                            <option value="Red">Red</option>
+                            <option value="Silver">Silver</option>
+                            <option value="Brown">Brown</option>
+                            <option value="Black">Black</option>
+                            <option value="Yellow">Yellow</option>
+                            <option value="Green">Green</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Mileage</label>
+                    @Html.TextBoxFor(m => m.Car.Mileage)
+                </div>
+                <div class="form-group">
+                    <label>MSRP</label>
+                    @Html.TextBoxFor(m => m.Car.MSRP)
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Model</label>
+                    @Html.DropDownListFor(m => m.Car.ModelId, Model.Model, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label for="BodyStyle" class="col-md-2 control-label">BodyStyle:</label>
+                    <div class="col-md-4">
+                        <select class="form-control" id="BodyStyle" name="BodyStyle">
+                            <option value="">- Select Body Style -</option>
+                            <option value="Car">Car</option>
+                            <option value="Truck">Truck</option>
+                            <option value="SUV">SUV</option>
+                            <option value="Van">Van</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Transmission" class="col-md-2 control-label">Transmission:</label>
+                    <div class="col-md-4">
+                        <select class="form-control" id="Transmission" name="Transmission">
+                            <option value="">- Select Transmission -</option>
+                            <option value="Automatic">Automatic</option>
+                            <option value="Manual">Manual</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Interior" class="col-md-2 control-label">Interior:</label>
+                    <div class="col-md-4">
+                        <select class="form-control" id="Interior" name="Interior">
+                            <option value="">- Select Interior -</option>
+                            <option value="Tan">Tan</option>
+                            <option value="Black">Black</option>
+                            <option value="White">White</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>VIN #</label>
+                    @Html.TextBoxFor(m => m.Car.VIN)
+                </div>
+                <div class="form-group">
+                    <label>Sales Price</label>
+                    @Html.TextBoxFor(m => m.Car.SalesPrice)
+                </div>
+            </div>
+            <div>
+                <div class="row">
+                    <div class="form-group">
+                        <label>Description</label>
+                        @Html.TextAreaFor(m => m.Car.CarDescription)
+                    </div>
+                    <div class="form-group">
+                        <label>Picture</label>
+                        <input id="ImageFileName" name="ImageFileName" type="file" class="form-control" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div>
+                    <button id="btnPurchase" class="btn btn-default">Save</button>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#frmAddVehicle').validate({
+                rules: {
+                    'Car.MfgYear': {
+                        required: true,
+                        min: 4
+
+                    },
+                    'Car.CarDescription': {
+                        required: true
+                    },
+                    'Car.VIN': {
+                        required: true
+                    },
+                    'Listing.SquareFootage': {
+                        required: true,
+                        number: true,
+                        min: 1
+                    },
+                    'ImageUpload': {
+                        required: true
+                    },
+                    'Listing.ListingDescription': {
+                        required: true
+                    }
+                }
+            });
+        });
+    </script>
+}

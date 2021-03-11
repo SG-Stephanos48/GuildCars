@@ -1,0 +1,88 @@
+﻿@model GuildCars.Models.Tables.Car
+
+@{
+    ViewBag.Title = "details";
+    var purchaseDate = @ViewBag.purchased;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Vehicle Details</h1>
+        <hr />
+        <div class="span" style="border: 1px solid black">
+            <div class="row">
+                <div class="col-md-3">
+                    <br />
+                    <p><b>&nbsp; &nbsp;@Model.MfgYear @Model.MakeName @Model.ModelName</b></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <p></p>
+                    &nbsp;<img class="featurelisting" src="@Url.Content("~/Images/" + Model.ImageFileName)" />
+                </div>
+                <div class="col-md-3">
+                    <p><b>Body Style:</b> @Model.BodyStyle </p>
+                    <p><b>Trans:</b> @Model.Transmission </p>
+                    <p><b>Color:</b> @Model.Color </p>
+                </div>
+                <div class="col-md-3">
+                    <p><b>Interior:</b> @Model.Interior </p>
+                    <p><b>Mileage:</b> @Model.Mileage </p>
+                    <p><b>VIN#:</b> @Model.VIN </p>
+                </div>
+                <div class="col-md-3">
+                    <p><b>SalesPrice:</b> @Model.SalesPrice </p>
+                    <p><b>MSRP:</b> @Model.MSRP </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+
+                </div>
+                <div class="row">
+                    <p><b>Description:</b> @Model.CarDescription</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-10">
+                    @if (purchaseDate == null)
+                    {
+                        <button id="btnCheck" class="button btn-default">Contact Us</button>
+                    }
+                    else
+                    {
+                        <h4 id="unavailable">Unavailable - Sold</h4>
+                    }
+                </div>
+            </div>
+            <br />
+
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    @*
+    <script>
+        var purchaseDate = @ViewBag.purchased;
+
+        $(document).ready(function () {
+            showhide();
+        });
+
+        function showhide() {
+            if (purchaseDate != null) {
+                $('#btnCheck').hide();
+                $('#unavailable').show();
+            }
+            else {
+                $('#btnCheck').show();
+                $('#unavailable').hide();
+            }
+        }
+
+    </script>
+    *@
+}

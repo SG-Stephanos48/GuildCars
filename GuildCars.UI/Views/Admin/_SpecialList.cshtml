@@ -1,0 +1,75 @@
+﻿@model IEnumerable<GuildCars.Models.Tables.Special>
+
+<div class="row">
+    <div class="col-md-12">
+        @foreach (var special in Model)
+        {
+            ViewBag.el = special.SpecialId;
+
+            <div class="span" style="border: 1px solid black">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><b>@special.Title</b></p>
+                    </div>
+                    <div class="col-md-6">
+                        <button id="btnRemoveSpecial" class="btn btn-default">Delete</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <p>@special.SpecialDescription</p>
+                </div>
+            </div>
+            <br />
+        }
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#btnRemoveSpecial').click(function () {
+                $('#r2').remove();
+            });
+        });
+
+        var el = @ViewBag.el;
+
+        $(document).ready(function () {
+
+            // Delete
+            $('#btnRemoveSpecial').click(function () {
+                var el = this;
+
+                // Delete id
+                var deleteid = $(this).data('id');
+
+                var confirmalert = confirm("Are you sure?");
+                if (confirmalert == true) {
+                    // AJAX Request
+                    $.ajax({
+                        url: '',
+                        type: 'POST',
+                        data: { id: deleteid },
+                        success: function (response) {
+
+                            if (response == 1) {
+                                // Remove row from HTML Table
+                                $(el).closest('tr').css('background', 'tomato');
+                                $(el).closest('tr').fadeOut(800, function () {
+                                    $(this).remove();
+                                });
+                            } else {
+                                alert('Invalid ID.');
+                            }
+
+                        }
+                    });
+                }
+
+            });
+
+        });
+    </script>
+}
