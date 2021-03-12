@@ -111,3 +111,4 @@ C:\Users\steph\source\repos\GuildCars\GuildCars.UI\bin\roslyn\System.Memory.dll
 C:\Users\steph\source\repos\GuildCars\GuildCars.UI\bin\roslyn\System.Numerics.Vectors.dll
 C:\Users\steph\source\repos\GuildCars\GuildCars.UI\bin\roslyn\System.Runtime.CompilerServices.Unsafe.dll
 C:\Users\steph\source\repos\GuildCars\GuildCars.UI\obj\Debug\GuildCars.UI.Migrations.addidentityfields.resources
+C:\Users\steph\source\repos\GuildCars\GuildCars.UI\bin\GuildCars.Models.dll.config

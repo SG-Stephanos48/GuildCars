@@ -33,10 +33,10 @@ namespace GuildCars.Data.Interfaces
         List<User> GetUsers();
         List<Role> GetRoles();
         List<UserRole> GetUserRoles();
-        void AddUser(User user);
-        void AddUserRole(string roleId);
+        void AddUser(AddUser addUser);
+        void AddUserRole(string roleId, string userId);
         void EditUser(User user);
-        void EditUserRole(string userId, string roleId);
+        void EditUserRole(string UserIdNew, string roleId);
         List<State> GetStates();
         List<PurchaseType> GetPurchaseTypes();
         void AddPurchase(Purchase purchase, string currentUser);
@@ -48,6 +48,7 @@ namespace GuildCars.Data.Interfaces
         List<BodyStyle> GetBodyStyles();
         List<Transmission> GetTransmissions();
         List<CarType> GetCarTypes();
+        User GetUser(string id);
 
     }
 }

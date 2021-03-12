@@ -58,3 +58,13 @@ body {
     background-color: grey !important;
 }
 
+.carousel .item {
+    background-color: #777;
+}
+
+.carousel {
+    background: url(http://placehold.it/620x420/ff9900);
+    position: relative;
+    padding: 10px; /* Shows as a border around the carousel */
+}
+

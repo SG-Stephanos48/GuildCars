@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace GuildCars.UI.Controllers
 {
-    //[Authorize(Roles = "Sales, Admin")]
+    [Authorize(Roles = "Sales, Admin")]
     public class SalesController : Controller
     {
         // GET: Sales

@@ -495,5 +495,20 @@ namespace GuildCars.Data.Mock
         {
             throw new NotImplementedException();
         }
+
+        public void AddUserRole(string roleId, string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public User GetUser(string firstName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddUser(AddUser addUser)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

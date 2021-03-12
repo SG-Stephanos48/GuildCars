@@ -355,20 +355,27 @@ GO
 CREATE PROCEDURE UserInsert (
 	@Id nvarchar(128) output,
 	@Email nvarchar(256),
-	@PasswordHash nvarchar(max),
 	@LastName nvarchar(max),
-	@FirstName nvarchar(max)
+	@FirstName nvarchar(max),
+	@EmailConfirmed bit,
+	@PhoneNumberConfirmed bit,
+	@TwoFactorEnabled bit,
+	@LockoutEnabled bit,
+	@AccessFailedCount int,
+	@UserName nvarchar(max)
 
 ) AS
 BEGIN
-	INSERT INTO AspNetUsers(FirstName, LastName, Email, PasswordHash)
-	VALUES (@FirstName, @LastName, @Email, @PasswordHash);
+	INSERT INTO AspNetUsers(Id, FirstName, LastName, Email, EmailConfirmed, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, UserName)
+	VALUES (@Id, @FirstName, @LastName, @Email, @EmailConfirmed, @PhoneNumberConfirmed, @TwoFactorEnabled, @LockoutEnabled, @AccessFailedCount, @UserName);
 	
 	SET @Id = SCOPE_IDENTITY();
 
 END
 
 GO
+
+
 
 IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
 	WHERE ROUTINE_NAME = 'UserRoleInsert')
@@ -426,6 +433,24 @@ END
 GO
 
 IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+	WHERE ROUTINE_NAME = 'GetUser')
+		DROP PROCEDURE GetUser
+GO
+
+CREATE PROCEDURE GetUser (
+	@id nvarchar(128)
+)AS 
+BEGIN
+	SELECT a.Id AS Id, a.Email AS Email, a.LastName AS LastName, a.FirstName AS FirstName, r.Name AS RoleName, r.Id AS RoleId, a.PasswordHash AS PasswordHash
+	FROM AspNetUsers a
+		JOIN AspNetUserRoles ur ON a.Id = ur.UserId
+		JOIN AspNetRoles r ON ur.RoleId = r.Id
+	WHERE a.Id = @id
+END
+
+GO
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
 	WHERE ROUTINE_NAME = 'GetRoles')
 		DROP PROCEDURE GetRoles
 GO
@@ -460,7 +485,7 @@ GO
 
 CREATE PROCEDURE GetUsers AS 
 BEGIN
-	SELECT a.Id, a.Email, a.LastName, a.FirstName, r.Name
+	SELECT a.Id, a.Email, a.LastName, a.FirstName, r.Name AS RoleName, r.Id AS RoleId
 	FROM AspNetUsers a
 		JOIN AspNetUserRoles ur ON a.Id = ur.UserId
 		JOIN AspNetRoles r ON ur.RoleId = r.Id
@@ -476,7 +501,6 @@ GO
 CREATE PROCEDURE EditUser (
 	@Id nvarchar(128) output,
 	@Email nvarchar(256),
-	@PasswordHash nvarchar(max),
 	@LastName nvarchar(max),
 	@FirstName nvarchar(max)
 
@@ -484,7 +508,6 @@ CREATE PROCEDURE EditUser (
 BEGIN
 	UPDATE AspNetUsers SET 
 		Email = @Email, 
-		PasswordHash = @PasswordHash, 
 		LastName = @LastName, 
 		FirstName = @FirstName
 

@@ -1,4 +1,5 @@
 ﻿using GuildCars.Data.Factories;
+using GuildCars.Models.Queries;
 using GuildCars.Models.Tables;
 using GuildCars.UI.Models;
 using Microsoft.AspNet.Identity;
@@ -253,46 +254,68 @@ namespace GuildCars.UI.Controllers
             model.User = new User();
 
             return View(model);
+
         }
 
-        public ActionResult PostUser(User user)
+        public ActionResult PostUser(UserEditViewModel uviewModel)
         {
-            var roleId = user.Role;
+            //var roleName = uviewModel.User.RoleName;
+
+            var user = uviewModel.User;
+
+            string id = uviewModel.User.Id;
+
+            Guid guidid = Guid.NewGuid();
+
+            AddUser addUser = new AddUser();
+
+            addUser.Id = guidid.ToString();
+            addUser.FirstName = user.FirstName;
+            addUser.LastName = user.LastName;
+            addUser.Email = user.Email;
+            addUser.EmailConfirmed = 1;
+            addUser.AccessFailedCount = 1;
+            addUser.LockOutEnabled = 1;
+            addUser.PhoneNumberConfirmed = 1;
+            addUser.TwoFactorEnabled = 1;
+            addUser.UserName = "tirpitz48";
 
             if (!ModelState.IsValid)
             {
                 //return BadRequest(ModelState);
             }
 
-            GuildCarsRepositoryFactory.GetRepository().AddUser(user);
+            GuildCarsRepositoryFactory.GetRepository().AddUser(addUser);
 
-            GuildCarsRepositoryFactory.GetRepository().AddUserRole(roleId);
+            var userNew = GuildCarsRepositoryFactory.GetRepository().GetUser(id);
+
+            var userId = userNew.Id;
+            var roleId = userNew.RoleId;
+
+            GuildCarsRepositoryFactory.GetRepository().AddUserRole(roleId, userId);
             //db.SaveChanges();
 
-            var model1 = new UserEditViewModel();
-
-            var roleRepo = GuildCarsRepositoryFactory.GetRepository();
-
-            model1.Role = new SelectList(roleRepo.GetRoles(), "Id", "Name");
-            model1.User = new User();
-
-
-            return View("AddUser", model1);
+            var model = GuildCarsRepositoryFactory.GetRepository().GetUsers();
+            return View("Users", model);
             //return Created($"api/Dvds1/{dvd.DvdId})", dvd);
             //return null;
             //return CreatedAtRoute("DefaultApi", new { id = dvd.DvdId }, dvd);
         }
 
         [HttpGet]
-        public ActionResult EditUser()
+        public ActionResult EditUser(string id)
         {
-
             var model = new UserEditViewModel();
+
+            var Repo = GuildCarsRepositoryFactory.GetRepository();
+
+            var user = Repo.GetUser(id);
+
+            model.User = user;
 
             var roleRepo = GuildCarsRepositoryFactory.GetRepository();
 
             model.Role = new SelectList(roleRepo.GetRoles(), "Id", "Name");
-            model.User = new User();
 
             return View(model);
         }
@@ -300,8 +323,8 @@ namespace GuildCars.UI.Controllers
         [HttpPost]
         public ActionResult EditUserPost(User user)
         {
-            var userId = user.Id;
-            var roleId = user.Role;
+            var id = user.Id;
+            var roleId = user.RoleId;
 
             if (!ModelState.IsValid)
             {
@@ -309,34 +332,25 @@ namespace GuildCars.UI.Controllers
             }
 
             GuildCarsRepositoryFactory.GetRepository().EditUser(user);
-            GuildCarsRepositoryFactory.GetRepository().EditUserRole(userId, roleId);
+
+            var userNew = GuildCarsRepositoryFactory.GetRepository().GetUser(id);
+
+            var UserIdNew = userNew.Id;
+            var RoleIdOld = userNew.RoleId;
+
+            if (roleId != RoleIdOld)
+            {
+                GuildCarsRepositoryFactory.GetRepository().EditUserRole(UserIdNew, roleId);
+            }
+
             //db.SaveChanges();
 
-            var model1 = new UserEditViewModel();
-
-            var roleRepo = GuildCarsRepositoryFactory.GetRepository();
-
-            model1.Role = new SelectList(roleRepo.GetRoles(), "Id", "Name");
-            model1.User = new User();
-
-            return View("EditUser", model1);
+            var model = GuildCarsRepositoryFactory.GetRepository().GetUsers();
+            return View("Users", model);
             //return Created($"api/Dvds1/{dvd.DvdId})", dvd);
             //return null;
             //return CreatedAtRoute("DefaultApi", new { id = dvd.DvdId }, dvd);
         }
 
-        /*
-        public ActionResult AddUser()
-        {
-            var model = new ModelEditViewModel();
-
-            var roleRepo = GuildCarsRepositoryFactory.GetRepository();
-
-            model.Make = new SelectList(makeRepo.GetMakes(), "MakeId", "MakeName");
-            model.Model = new Model();
-
-            return View(model);
-        }
-        */
     }
 }

@@ -49,7 +49,17 @@ namespace GuildCars.Data.EF
             throw new NotImplementedException();
         }
 
+        public void AddUser(AddUser addUser)
+        {
+            throw new NotImplementedException();
+        }
+
         public void AddUserRole(string roleId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddUserRole(string roleId, string userId)
         {
             throw new NotImplementedException();
         }
@@ -164,6 +174,11 @@ namespace GuildCars.Data.EF
         }
 
         public List<VehicleReport> GetUsed()
+        {
+            throw new NotImplementedException();
+        }
+
+        public User GetUser(string firstName)
         {
             throw new NotImplementedException();
         }

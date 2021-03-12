@@ -14,3 +14,4 @@ C:\Users\steph\source\repos\GuildCars\GuildCars.Data\obj\Debug\GuildCars.Data.cs
 C:\Users\steph\source\repos\GuildCars\GuildCars.Data\obj\Debug\GuildCars.Data.csproj.CopyComplete
 C:\Users\steph\source\repos\GuildCars\GuildCars.Data\obj\Debug\GuildCars.Data.dll
 C:\Users\steph\source\repos\GuildCars\GuildCars.Data\obj\Debug\GuildCars.Data.pdb
+C:\Users\steph\source\repos\GuildCars\GuildCars.Data\bin\Debug\GuildCars.Models.dll.config

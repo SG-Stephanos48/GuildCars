@@ -20,3 +20,4 @@ C:\Users\steph\source\repos\GuildCars\GuildCars.Tests\obj\Debug\GuildCars.Tests.
 C:\Users\steph\source\repos\GuildCars\GuildCars.Tests\obj\Debug\GuildCars.Tests.pdb
 C:\Users\steph\source\repos\GuildCars\GuildCars.Tests\bin\Debug\EntityFramework.dll
 C:\Users\steph\source\repos\GuildCars\GuildCars.Tests\bin\Debug\EntityFramework.xml
+C:\Users\steph\source\repos\GuildCars\GuildCars.Tests\bin\Debug\GuildCars.Models.dll.config

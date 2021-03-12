@@ -873,7 +873,7 @@ namespace GuildCars.Data.ADO
                         currentRow.Email = dr["Email"].ToString();
                         currentRow.LastName = dr["LastName"].ToString();
                         currentRow.FirstName = dr["FirstName"].ToString();
-                        currentRow.Role = dr["Name"].ToString();
+                        currentRow.RoleName = dr["RoleName"].ToString();
 
                         users.Add(currentRow);
                     }
@@ -882,10 +882,11 @@ namespace GuildCars.Data.ADO
             return users;
         }
 
-        public void AddUser(User user)
+        public void AddUser(AddUser addUser)
         {
             using (var cn = new SqlConnection(Settings.GetConnectionString()))
             {
+
                 SqlCommand cmd = new SqlCommand("UserInsert", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
@@ -894,41 +895,81 @@ namespace GuildCars.Data.ADO
 
                 cmd.Parameters.Add(param);
 
-                cmd.Parameters.AddWithValue("@Id", user.Id);
-                cmd.Parameters.AddWithValue("@Email", user.Email);
-                cmd.Parameters.AddWithValue("@LastName", user.LastName);
-                cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
-                cmd.Parameters.AddWithValue("@Password", user.Password);
+                cmd.Parameters.AddWithValue("@Id", addUser.Id);
+                cmd.Parameters.AddWithValue("@Email", addUser.Email);
+                cmd.Parameters.AddWithValue("@LastName", addUser.LastName);
+                cmd.Parameters.AddWithValue("@FirstName", addUser.FirstName);
+                cmd.Parameters.AddWithValue("@EmailConfirmed", addUser.EmailConfirmed);
+                cmd.Parameters.AddWithValue("@PhoneNumberConfirmed", addUser.PhoneNumberConfirmed);
+                cmd.Parameters.AddWithValue("@TwoFactorEnabled", addUser.TwoFactorEnabled);
+                cmd.Parameters.AddWithValue("@LockOutEnabled", addUser.LockOutEnabled);
+                cmd.Parameters.AddWithValue("@AccessFailedCount", addUser.AccessFailedCount);
+                cmd.Parameters.AddWithValue("@UserName", addUser.UserName);
 
                 cn.Open();
 
                 cmd.ExecuteNonQuery();
 
-                user.Id = param.Value.ToString();
+                addUser.Id = param.Value.ToString();
+
             }
         }
 
-        public void AddUserRole(string roleId)
+        public void AddUserRole(string roleId, string userId)
         {
             using (var cn = new SqlConnection(Settings.GetConnectionString()))
             {
                 SqlCommand cmd = new SqlCommand("UserRoleInsert", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                SqlParameter param = new SqlParameter("@Id", SqlDbType.Int);
+                SqlParameter param = new SqlParameter("@UserId", SqlDbType.Int);
                 param.Direction = ParameterDirection.Output;
 
                 cmd.Parameters.Add(param);
 
-                //cmd.Parameters.AddWithValue("@UserId", userId);
+                cmd.Parameters.AddWithValue("@UserId", userId);
                 cmd.Parameters.AddWithValue("@RoleId", roleId);
 
                 cn.Open();
 
                 cmd.ExecuteNonQuery();
 
-                //userId = param.Value.ToString();
+                userId = param.Value.ToString();
             }
+        }
+
+        public User GetUser(string id)
+        {
+            User user = null;
+
+            using (var cn = new SqlConnection(Settings.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("GetUser", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@Id", id);
+
+                cn.Open();
+
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    if (dr.Read())
+                    {
+                        user = new User();
+
+                        user.Id = dr["Id"].ToString();
+                        user.RoleName = dr["RoleName"].ToString();
+                        user.LastName = dr["LastName"].ToString();
+                        user.FirstName = dr["FirstName"].ToString();
+                        user.RoleName = dr["RoleName"].ToString();
+                        user.Email = dr["Email"].ToString();
+                        user.RoleId = dr["RoleId"].ToString();
+                        user.PasswordHash = dr["PasswordHash"].ToString();
+
+                    }
+                }
+            }
+            return user;
         }
 
         public List<Role> GetRoles()
@@ -994,7 +1035,7 @@ namespace GuildCars.Data.ADO
                 cmd.Parameters.AddWithValue("@Email", user.Email);
                 cmd.Parameters.AddWithValue("@LastName", user.LastName);
                 cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
-                cmd.Parameters.AddWithValue("@Password", user.Password);
+                //cmd.Parameters.AddWithValue("@PasswordHash", user.PasswordHash);
 
                 cn.Open();
 
@@ -1003,14 +1044,14 @@ namespace GuildCars.Data.ADO
 
         }
 
-        public void EditUserRole(string userId, string roleId)
+        public void EditUserRole(string UserIdNew, string roleId)
         {
             using (var cn = new SqlConnection(Settings.GetConnectionString()))
             {
                 SqlCommand cmd = new SqlCommand("EditUserRole", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@UserId", userId);
+                cmd.Parameters.AddWithValue("@UserId", UserIdNew);
                 cmd.Parameters.AddWithValue("@RoleId", roleId);
 
                 cn.Open();

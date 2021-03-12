@@ -22,7 +22,7 @@
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    @Html.TextBoxFor(m => m.User.Password)
+                    @Html.TextBoxFor(m => m.User.PasswordHash)
                 </div>
             </div>
             <div class="col-md-6">
@@ -32,7 +32,7 @@
                 </div>
                 <div class="form-group">
                     <label>Role</label>
-                    @Html.DropDownListFor(m => m.User.Role, Model.Role, new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.User.RoleId, Model.Role, new { @class = "form-control" })
                 </div>
                 <div class="form-group">
                     <label>Confirm Password</label>
