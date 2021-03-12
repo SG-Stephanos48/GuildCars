@@ -28,7 +28,7 @@ BEGIN
 	FROM Car c
 		JOIN Make m ON c.MakeId = m.MakeId
 		JOIN Model ma ON c.ModelId = ma.ModelId
-		JOIN Purchase p ON c.PurchaseId = p.PurchaseId
+		FULL JOIN Purchase p ON c.PurchaseId = p.PurchaseId
 	WHERE c.CarId = @carId
 END
 
@@ -197,6 +197,19 @@ END
 GO
 
 IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+	WHERE ROUTINE_NAME = 'PurchaseTypesSelectAll')
+		DROP PROCEDURE PurchaseTypesSelectAll
+GO
+
+CREATE PROCEDURE PurchaseTypesSelectAll AS
+BEGIN
+	SELECT PurchaseTypeId, PurchaseTypeName
+	FROM PurchaseType
+END
+
+GO
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
 	WHERE ROUTINE_NAME = 'SpecialSelectAll')
 		DROP PROCEDURE SpecialSelectAll
 GO
@@ -243,7 +256,6 @@ CREATE PROCEDURE ContactInsert1 (
 	@ContactName nvarchar(100),
 	@Email nvarchar(100),
 	@Phone nvarchar(50),
-	@ContactMessage nvarchar(1000),
 	@Street1 nvarchar(100),
 	@Street2 nvarchar(100),
 	@City nvarchar(50),
@@ -251,8 +263,8 @@ CREATE PROCEDURE ContactInsert1 (
 
 ) AS
 BEGIN
-	INSERT INTO Contact (StatesId, PurchaseId, ContactName, Email, Phone, ContactMessage, Street1, Street2, City, ZipCode)
-	VALUES (@StatesId, @PurchaseId, @ContactName, @Email, @Phone, @ContactMessage, @Street1, @Street2, @City, @ZipCode);
+	INSERT INTO Contact (StatesId, PurchaseId, ContactName, Email, Phone, Street1, Street2, City, ZipCode)
+	VALUES (@StatesId, @PurchaseId, @ContactName, @Email, @Phone, @Street1, @Street2, @City, @ZipCode);
 	
 	SET @ContactId = SCOPE_IDENTITY();
 END
@@ -340,6 +352,7 @@ BEGIN
 	VALUES (@FirstName, @LastName, @Email, @PasswordHash);
 	
 	SET @Id = SCOPE_IDENTITY();
+
 END
 
 GO
@@ -469,8 +482,8 @@ END
 GO
 
 IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
-	WHERE ROUTINE_NAME = 'EditUser')
-		DROP PROCEDURE EditUser
+	WHERE ROUTINE_NAME = 'EditUserRole')
+		DROP PROCEDURE EditUserRole
 GO
 
 CREATE PROCEDURE EditUserRole (
@@ -483,6 +496,132 @@ BEGIN
 		RoleId = @RoleId 
 
 	WHERE UserId = @UserId
+
+END
+
+GO
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+	WHERE ROUTINE_NAME = 'PurchaseInsert')
+		DROP PROCEDURE PurchaseInsert
+GO
+
+CREATE PROCEDURE PurchaseInsert (
+	@PurchaseId int output,
+	@PurchaseTypeId int,
+	@PurchasePrice decimal,
+	@PurchaseDate datetime2(7),
+	@UserId nvarchar(128)
+
+) AS
+BEGIN
+	INSERT INTO Purchase (PurchaseTypeId, PurchasePrice, PurchaseDate, UserId)
+	VALUES (@PurchaseTypeId, @PurchasePrice, @PurchaseDate, @UserId);
+	
+	SET @PurchaseId = SCOPE_IDENTITY();
+END
+
+GO
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+	WHERE ROUTINE_NAME = 'CarUpdatePurchaseStatus')
+		DROP PROCEDURE CarUpdatePurchaseStatus
+GO
+
+CREATE PROCEDURE CarUpdatePurchaseStatus (
+	@CarId int output,
+	@PurchaseId int
+
+) AS
+BEGIN
+	UPDATE Car SET 
+		PurchaseId = @PurchaseId
+
+	WHERE CarId = @CarId
+
+END
+
+GO
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+	WHERE ROUTINE_NAME = 'GetPurchaseIds')
+		DROP PROCEDURE GetPurchaseIds
+GO
+
+CREATE PROCEDURE GetPurchaseIds AS
+BEGIN
+	SELECT PurchaseId
+	FROM Purchase
+
+END
+
+GO
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+	WHERE ROUTINE_NAME = 'GetBodyStyles')
+		DROP PROCEDURE GetBodyStyles
+GO
+
+CREATE PROCEDURE GetBodyStyles AS
+BEGIN
+	SELECT Id, BodyStyleName
+	FROM BodyStyle
+
+END
+
+GO
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+	WHERE ROUTINE_NAME = 'GetCarTypes')
+		DROP PROCEDURE GetCarTypes
+GO
+
+CREATE PROCEDURE GetCarTypes AS
+BEGIN
+	SELECT Id, CarTypeName
+	FROM CarType
+
+END
+
+GO
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+	WHERE ROUTINE_NAME = 'GetColors')
+		DROP PROCEDURE GetColors
+GO
+
+CREATE PROCEDURE GetColors AS
+BEGIN
+	SELECT Id, ColorName
+	FROM Color
+
+END
+
+GO
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+	WHERE ROUTINE_NAME = 'GetInteriors')
+		DROP PROCEDURE GetInteriors
+GO
+
+CREATE PROCEDURE GetInteriors AS
+BEGIN
+	SELECT Id, InteriorName
+	FROM Interior
+
+END
+
+GO
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+	WHERE ROUTINE_NAME = 'GetTransmissions')
+		DROP PROCEDURE GetTransmissions
+GO
+
+CREATE PROCEDURE GetTransmissions AS
+BEGIN
+	SELECT Id, TransName
+	FROM Transmission
 
 END
 

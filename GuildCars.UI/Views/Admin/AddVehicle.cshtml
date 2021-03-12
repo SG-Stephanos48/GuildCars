@@ -18,40 +18,24 @@
                     @Html.DropDownListFor(m => m.Car.MakeId, Model.Make, new { @class = "form-control" })
                 </div>
                 <div class="form-group">
-                    <label for="CarType" class="col-md-2 control-label">Type:</label><br />
-                    <div class="col-md-4">
-                        <select class="form-control" id="CarType" name="CarType">
-                            <option value="">- Select CarType -</option>
-                            <option value="New">New</option>
-                            <option value="Used">Used</option>
-                        </select>
-                    </div>
+                    <label>Type</label>
+                    @Html.DropDownListFor(m => m.Car.CarType, Model.CarType, new { @class = "form-control" })
                 </div>
                 <div class="form-group">
                     <label>Year</label>
-                    @Html.TextBoxFor(m => m.Car.MfgYear)
+                    @Html.TextBoxFor(m => m.Car.MfgYear, new { @class = "form-control" })
                 </div>
                 <div class="form-group">
-                    <label for="Color" class="col-md-2 control-label">Color:</label>
-                    <div class="col-md-4">
-                        <select class="form-control" id="Color" name="Color">
-                            <option value="">- Select Color -</option>
-                            <option value="Red">Red</option>
-                            <option value="Silver">Silver</option>
-                            <option value="Brown">Brown</option>
-                            <option value="Black">Black</option>
-                            <option value="Yellow">Yellow</option>
-                            <option value="Green">Green</option>
-                        </select>
-                    </div>
+                    <label>Color</label>
+                    @Html.DropDownListFor(m => m.Car.Color, Model.Color, new { @class = "form-control" })
                 </div>
                 <div class="form-group">
                     <label>Mileage</label>
-                    @Html.TextBoxFor(m => m.Car.Mileage)
+                    @Html.TextBoxFor(m => m.Car.Mileage, new { @class = "form-control" })
                 </div>
                 <div class="form-group">
                     <label>MSRP</label>
-                    @Html.TextBoxFor(m => m.Car.MSRP)
+                    @Html.TextBoxFor(m => m.Car.MSRP, new { @class = "form-control" })
                 </div>
             </div>
             <div class="col-md-6">
@@ -60,57 +44,34 @@
                     @Html.DropDownListFor(m => m.Car.ModelId, Model.Model, new { @class = "form-control" })
                 </div>
                 <div class="form-group">
-                    <label for="BodyStyle" class="col-md-2 control-label">BodyStyle:</label>
-                    <div class="col-md-4">
-                        <select class="form-control" id="BodyStyle" name="BodyStyle">
-                            <option value="">- Select Body Style -</option>
-                            <option value="Car">Car</option>
-                            <option value="Truck">Truck</option>
-                            <option value="SUV">SUV</option>
-                            <option value="Van">Van</option>
-                        </select>
-                    </div>
+                    <label>BodyStyle:</label>
+                    @Html.DropDownListFor(m => m.Car.BodyStyle, Model.BodyStyle, new { @class = "form-control" })
                 </div>
                 <div class="form-group">
-                    <label for="Transmission" class="col-md-2 control-label">Transmission:</label>
-                    <div class="col-md-4">
-                        <select class="form-control" id="Transmission" name="Transmission">
-                            <option value="">- Select Transmission -</option>
-                            <option value="Automatic">Automatic</option>
-                            <option value="Manual">Manual</option>
-                        </select>
-                    </div>
+                    <label>Transmission</label>
+                    @Html.DropDownListFor(m => m.Car.Transmission, Model.Transmission, new { @class = "form-control" })
                 </div>
                 <div class="form-group">
-                    <label for="Interior" class="col-md-2 control-label">Interior:</label>
-                    <div class="col-md-4">
-                        <select class="form-control" id="Interior" name="Interior">
-                            <option value="">- Select Interior -</option>
-                            <option value="Tan">Tan</option>
-                            <option value="Black">Black</option>
-                            <option value="White">White</option>
-                        </select>
-                    </div>
+                    <label>Interior</label>
+                    @Html.DropDownListFor(m => m.Car.Interior, Model.Interior, new { @class = "form-control" })
                 </div>
                 <div class="form-group">
                     <label>VIN #</label>
-                    @Html.TextBoxFor(m => m.Car.VIN)
+                    @Html.TextBoxFor(m => m.Car.VIN, new { @class = "form-control" })
                 </div>
                 <div class="form-group">
                     <label>Sales Price</label>
-                    @Html.TextBoxFor(m => m.Car.SalesPrice)
+                    @Html.TextBoxFor(m => m.Car.SalesPrice, new { @class = "form-control" })
                 </div>
             </div>
-            <div>
-                <div class="row">
-                    <div class="form-group">
-                        <label>Description</label>
-                        @Html.TextAreaFor(m => m.Car.CarDescription)
-                    </div>
-                    <div class="form-group">
-                        <label>Picture</label>
-                        <input id="ImageFileName" name="ImageFileName" type="file" class="form-control" />
-                    </div>
+            <div class="row">
+                <div class="form-group">
+                    <label>Description</label>
+                    @Html.TextAreaFor(m => m.Car.CarDescription, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label>Picture</label>
+                    <input id="ImageFileName" name="ImageFileName" type="file" class="form-control" />
                 </div>
             </div>
 
@@ -139,17 +100,6 @@
                         required: true
                     },
                     'Car.VIN': {
-                        required: true
-                    },
-                    'Listing.SquareFootage': {
-                        required: true,
-                        number: true,
-                        min: 1
-                    },
-                    'ImageUpload': {
-                        required: true
-                    },
-                    'Listing.ListingDescription': {
                         required: true
                     }
                 }

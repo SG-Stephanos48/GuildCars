@@ -34,6 +34,11 @@ namespace GuildCars.Data.EF
             throw new NotImplementedException();
         }
 
+        public void AddPurchase(Purchase purchase, string currentUser)
+        {
+            throw new NotImplementedException();
+        }
+
         public void AddSpecial(Special special)
         {
             throw new NotImplementedException();
@@ -50,6 +55,11 @@ namespace GuildCars.Data.EF
         }
 
         public void ContactInsert(Contact contact)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ContactInsert1(Contact contact, int purchaseId)
         {
             throw new NotImplementedException();
         }
@@ -82,10 +92,30 @@ namespace GuildCars.Data.EF
             return cars;
         }
 
+        public List<BodyStyle> GetBodyStyles()
+        {
+            throw new NotImplementedException();
+        }
+
         public Car GetById(int carId)
         {
             var car = db.Cars.FirstOrDefault(c => c.CarId == carId);
             return car;
+        }
+
+        public List<CarType> GetCarTypes()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Color> GetColors()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Interior> GetInteriors()
+        {
+            throw new NotImplementedException();
         }
 
         public List<Make> GetMakes()
@@ -103,12 +133,32 @@ namespace GuildCars.Data.EF
             throw new NotImplementedException();
         }
 
+        public List<Purchase> GetPurchaseIds()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<PurchaseType> GetPurchaseTypes()
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Role> GetRoles()
         {
             throw new NotImplementedException();
         }
 
         public List<Special> GetSpecials()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<State> GetStates()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Transmission> GetTransmissions()
         {
             throw new NotImplementedException();
         }
@@ -133,6 +183,11 @@ namespace GuildCars.Data.EF
             car.CarId = db.Cars.Max(x => x.CarId) + 1;
             db.Cars.Add(car);
             db.SaveChanges();
+        }
+
+        public IEnumerable<SalesReport> SalesReport(SalesReportParameters parameters)
+        {
+            throw new NotImplementedException();
         }
 
         public IEnumerable<SearchItem> Search(CarSearchParameters parameters)
@@ -182,5 +237,19 @@ namespace GuildCars.Data.EF
             db.SaveChanges();
         }
 
+        public void UpdatePurchaseStatus(Car car)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdatePurchaseStatus(Car car, int purchaseId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdatePurchaseStatus(int carId, int purchaseId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

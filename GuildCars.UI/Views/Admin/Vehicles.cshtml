@@ -72,7 +72,7 @@
         function search() {
             var params;
             var imagePath = '@Url.Content("~/Images/")';
-            var detailsPath = 'https://localhost:44313/Inventory/Details?carId=';
+            var detailsPath = 'https://localhost:44313/Admin/EditVehicle?carId=';
 
             params = 'minPrice=' + $('#minPrice').val() + '&maxPrice=' + $('#maxPrice').val() + '&minYear=' + $('#minYear').val() +
                 '&maxYear=' + $('#maxYear').val() + '&magicTerm=' + $('#magicTerm').val();
@@ -111,7 +111,7 @@
                             '</div>' +
                             '<div class="row">' +
                             '<div class="col-md-offset-11">' +
-                            '<button class="btn btn-default"><a href="' + detailsPath + car.CarId + '">Details</a></button>' +
+                            '<button class="btn btn-default"><a href="' + detailsPath + car.CarId + '">Edit</a></button>' +
                             '</div>' +
                             '</div> <br />' +
                             '</div>' +

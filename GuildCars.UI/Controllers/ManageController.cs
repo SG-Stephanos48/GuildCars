@@ -10,7 +10,7 @@ using GuildCars.UI.Models;
 
 namespace GuildCars.UI.Controllers
 {
-    [Authorize]
+    [Authorize]     //[Authorize(Roles = "Admin")]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;

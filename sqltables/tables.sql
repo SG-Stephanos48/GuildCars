@@ -109,3 +109,29 @@ CREATE TABLE Special (
 	Title nvarchar(50) null,
 	SpecialDescription nvarchar(1000) null
 )
+
+CREATE TABLE Transmission (
+	Id int identity(1,1) not null primary key,
+	TransName nvarchar(50) null
+)
+
+CREATE TABLE CarType (
+	Id int identity(1,1) not null primary key,
+	CarTypeName nvarchar(50) null
+)
+
+CREATE TABLE Color (
+	Id int identity(1,1) not null primary key,
+	ColorName nvarchar(50) null
+)
+
+CREATE TABLE Interior (
+	Id int identity(1,1) not null primary key,
+	InteriorName nvarchar(50) null
+)
+
+CREATE TABLE BodyStyle (
+	Id int identity(1,1) not null primary key,
+	BodyStyleName nvarchar(50) null
+)
+

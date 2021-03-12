@@ -425,5 +425,75 @@ namespace GuildCars.Data.Mock
         {
             throw new NotImplementedException();
         }
+
+        public List<State> GetStates()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<PurchaseType> GetPurchaseTypes()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddPurchase(Purchase purchase, string currentUser)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdatePurchaseStatus(Car car)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ContactInsert1(Contact contact, int purchaseId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Purchase> GetPurchaseIds()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdatePurchaseStatus(Car car, int purchaseId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdatePurchaseStatus(int carId, int purchaseId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Interior> GetInteriors()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Color> GetColors()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<BodyStyle> GetBodyStyles()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Transmission> GetTransmissions()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<CarType> GetCarTypes()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<SalesReport> SalesReport(SalesReportParameters parameters)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

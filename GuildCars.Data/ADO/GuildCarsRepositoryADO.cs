@@ -96,7 +96,7 @@ namespace GuildCars.Data.ADO
                         car.CarId = (int)dr["CarId"];
                         car.MakeName = dr["MakeName"].ToString();
                         car.ModelName = dr["ModelName"].ToString();
-                        car.PurchaseDate = (DateTime)dr["PurchaseDate"];
+                        //car.PurchaseDate = (DateTime)dr["PurchaseDate"];
                         car.CarType = dr["CarType"].ToString();
                         car.BodyStyle = dr["BodyStyle"].ToString();
                         car.MfgYear = dr["MfgYear"].ToString();
@@ -173,7 +173,7 @@ namespace GuildCars.Data.ADO
                 cmd.Parameters.AddWithValue("@SalesPrice", car.SalesPrice);
                 cmd.Parameters.AddWithValue("@CarDescription", car.CarDescription);
                 cmd.Parameters.AddWithValue("@Feature", car.Feature);
-                cmd.Parameters.AddWithValue("@ImageFileName", car.ImageFileName);
+                cmd.Parameters.AddWithValue("@ImageFileName", car.ImageFileName = "car.jpg");
 
                 cn.Open();
 
@@ -206,6 +206,24 @@ namespace GuildCars.Data.ADO
                 cmd.Parameters.AddWithValue("@CarDescription", car.CarDescription);
                 cmd.Parameters.AddWithValue("@Feature", car.Feature);
                 cmd.Parameters.AddWithValue("@ImageFileName", car.ImageFileName);
+
+                cn.Open();
+
+                cmd.ExecuteNonQuery();
+            }
+
+        }
+
+        public void UpdatePurchaseStatus(int carId, int purchaseId)
+        {
+            using (var cn = new SqlConnection(Settings.GetConnectionString()))
+            {
+
+                SqlCommand cmd = new SqlCommand("CarUpdatePurchaseStatus", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@CarId", carId);
+                cmd.Parameters.AddWithValue("@PurchaseId", purchaseId);
 
                 cn.Open();
 
@@ -264,11 +282,11 @@ namespace GuildCars.Data.ADO
             }
         }
 
-        public void ContactInsert1(Contact contact)
+        public void ContactInsert1(Contact contact, int purchaseId)
         {
             using (var cn = new SqlConnection(Settings.GetConnectionString()))
             {
-                SqlCommand cmd = new SqlCommand("ContactInsert", cn);
+                SqlCommand cmd = new SqlCommand("ContactInsert1", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 SqlParameter param = new SqlParameter("@ContactId", SqlDbType.Int);
@@ -280,17 +298,14 @@ namespace GuildCars.Data.ADO
                 cmd.Parameters.AddWithValue("@ContactName", contact.ContactName);
                 cmd.Parameters.AddWithValue("@Email", contact.Email);
                 cmd.Parameters.AddWithValue("@Phone", contact.Phone);
-                cmd.Parameters.AddWithValue("@ContactMessage", contact.ContactMessage);
-
-                
+                //cmd.Parameters.AddWithValue("@ContactMessage", contact.ContactMessage);
                 cmd.Parameters.AddWithValue("@StatesId", contact.StatesId);
-                cmd.Parameters.AddWithValue("@PurchaseId", contact.PurchaseId);
+                cmd.Parameters.AddWithValue("@PurchaseId", contact.PurchaseId = purchaseId);
                 cmd.Parameters.AddWithValue("@Street1", contact.Street1);
                 cmd.Parameters.AddWithValue("@Street2", contact.Street2);
                 cmd.Parameters.AddWithValue("@City", contact.City);
                 cmd.Parameters.AddWithValue("@ZipCode", contact.ZipCode);
                 
-
                 cn.Open();
 
                 cmd.ExecuteNonQuery();
@@ -309,7 +324,7 @@ namespace GuildCars.Data.ADO
                                 "FROM Car c " +
                                     "JOIN Make m ON c.MakeId = m.MakeId " +
                                     "JOIN Model ma ON c.ModelId = ma.ModelId " +
-                                    "JOIN Purchase p ON c.PurchaseId = p.PurchaseId " +
+                                    "FULL JOIN Purchase p ON c.PurchaseId = p.PurchaseId " +
                                 "WHERE 1 = 1 AND CarType = 'New' ";
 
                 SqlCommand cmd = new SqlCommand();
@@ -392,7 +407,7 @@ namespace GuildCars.Data.ADO
                                 "FROM Car c " +
                                     "JOIN Make m ON c.MakeId = m.MakeId " +
                                     "JOIN Model ma ON c.ModelId = ma.ModelId " +
-                                    "JOIN Purchase p ON c.PurchaseId = p.PurchaseId " +
+                                    "FULL JOIN Purchase p ON c.PurchaseId = p.PurchaseId " +
                                 "WHERE 1 = 1 AND CarType = 'Used'";
 
                 SqlCommand cmd = new SqlCommand();
@@ -471,12 +486,11 @@ namespace GuildCars.Data.ADO
 
             using (var cn = new SqlConnection(Settings.GetConnectionString()))
             {
-                string query = "SELECT TOP 20 c.CarId, c.MfgYear, m.MakeName, ma.ModelName, c.BodyStyle, c.CarType, c.Transmission, c.Color, c.Interior, c.Mileage, c.VIN, c.SalesPrice, c.MSRP, c.ImageFileName, c.Feature, p.PurchaseDate " +
+                string query = "SELECT TOP 20 c.CarId, c.MfgYear, m.MakeName, ma.ModelName, c.BodyStyle, c.CarType, c.Transmission, c.Color, c.Interior, c.Mileage, c.VIN, c.SalesPrice, c.MSRP, c.ImageFileName, c.Feature, c.PurchaseId " +
                                 "FROM Car c " +
                                     "JOIN Make m ON c.MakeId = m.MakeId " +
                                     "JOIN Model ma ON c.ModelId = ma.ModelId " +
-                                    "JOIN Purchase p ON c.PurchaseId = p.PurchaseId " +
-                                "WHERE 1 = 1 ";
+                                "WHERE 1 = 1 AND PurchaseId IS NULL ";
 
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = cn;
@@ -554,11 +568,11 @@ namespace GuildCars.Data.ADO
 
             using (var cn = new SqlConnection(Settings.GetConnectionString()))
             {
-                string query = "SELECT TOP 20 c.CarId, c.MfgYear, m.MakeName, ma.ModelName, c.BodyStyle, c.CarType, c.Transmission, c.Color, c.Interior, c.Mileage, c.VIN, c.SalesPrice, c.MSRP, c.ImageFileName, c.Feature, p.PurchaseDate " +
+                string query = "SELECT TOP 20 c.CarId, c.MfgYear, m.MakeName, ma.ModelName, c.BodyStyle, c.CarType, c.Transmission, c.Color, c.Interior, c.Mileage, c.VIN, c.SalesPrice, c.MSRP, c.ImageFileName, c.Feature, c.PurchaseId " +
                                 "FROM Car c" +
                                     "JOIN Make m ON c.MakeId = m.MakeId " +
                                     "JOIN Model ma ON c.ModelId = ma.ModelId " +
-                                    "JOIN Purchase p ON c.PurchaseId = p.PurchaseId " +
+                                    "FULL JOIN  Purchase p ON c.PurchaseId = p.PurchaseId " +
                                 "WHERE 1 = 1 AND p.PurchaseDate IS NULL";
 
                 SqlCommand cmd = new SqlCommand();
@@ -864,7 +878,6 @@ namespace GuildCars.Data.ADO
                 cmd.Parameters.AddWithValue("@LastName", user.LastName);
                 cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
                 cmd.Parameters.AddWithValue("@Password", user.Password);
-                cmd.Parameters.AddWithValue("@PasswordConfirmed", user.PasswordConfirmed);
 
                 cn.Open();
 
@@ -983,6 +996,307 @@ namespace GuildCars.Data.ADO
 
                 cmd.ExecuteNonQuery();
             }
+
+        }
+
+        public List<State> GetStates()
+        {
+            List<State> states = new List<State>();
+
+            using (var cn = new SqlConnection(Settings.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("StatesSelectAll", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cn.Open();
+
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        State currentRow = new State();
+                        currentRow.StateId = dr["StatesId"].ToString();
+                        currentRow.StateName = dr["StatesName"].ToString();
+
+                        states.Add(currentRow);
+                    }
+                }
+            }
+            return states;
+        }
+
+        public List<PurchaseType> GetPurchaseTypes()
+        {
+            List<PurchaseType> types = new List<PurchaseType>();
+
+            using (var cn = new SqlConnection(Settings.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("PurchaseTypesSelectAll", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cn.Open();
+
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        PurchaseType currentRow = new PurchaseType();
+                        currentRow.PurchaseTypeId = (int)dr["PurchaseTypeId"];
+                        currentRow.PurchaseTypeName = dr["PurchaseTypeName"].ToString();
+
+                        types.Add(currentRow);
+                    }
+                }
+            }
+            return types;
+        }
+
+        public List<CarType> GetCarTypes()
+        {
+            List<CarType> types = new List<CarType>();
+
+            using (var cn = new SqlConnection(Settings.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("GetCarTypes", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cn.Open();
+
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        CarType currentRow = new CarType();
+                        currentRow.Id = (int)dr["Id"];
+                        currentRow.CarTypeName = dr["CarTypeName"].ToString();
+
+                        types.Add(currentRow);
+                    }
+                }
+            }
+            return types;
+        }
+
+        public List<Color> GetColors()
+        {
+            List<Color> types = new List<Color>();
+
+            using (var cn = new SqlConnection(Settings.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("GetColors", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cn.Open();
+
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        Color currentRow = new Color();
+
+                        currentRow.Id = (int)dr["Id"];
+                        currentRow.ColorName = dr["ColorName"].ToString();
+
+                        types.Add(currentRow);
+                    }
+                }
+            }
+            return types;
+        }
+
+        public List<Interior> GetInteriors()
+        {
+            List<Interior> types = new List<Interior>();
+
+            using (var cn = new SqlConnection(Settings.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("GetInteriors", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cn.Open();
+
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        Interior currentRow = new Interior();
+
+                        currentRow.Id = (int)dr["Id"];
+                        currentRow.InteriorName = dr["InteriorName"].ToString();
+
+                        types.Add(currentRow);
+                    }
+                }
+            }
+            return types;
+        }
+
+        public List<Transmission> GetTransmissions()
+        {
+            List<Transmission> types = new List<Transmission>();
+
+            using (var cn = new SqlConnection(Settings.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("GetTransmissions", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cn.Open();
+
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        Transmission currentRow = new Transmission();
+
+                        currentRow.Id = (int)dr["Id"];
+                        currentRow.TransName = dr["TransName"].ToString();
+
+                        types.Add(currentRow);
+                    }
+                }
+            }
+            return types;
+        }
+
+        public List<BodyStyle> GetBodyStyles()
+        {
+            List<BodyStyle> types = new List<BodyStyle>();
+
+            using (var cn = new SqlConnection(Settings.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("GetBodyStyles", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cn.Open();
+
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        BodyStyle currentRow = new BodyStyle();
+
+                        currentRow.Id = (int)dr["Id"];
+                        currentRow.BodyStyleName = dr["BodyStyleName"].ToString();
+
+                        types.Add(currentRow);
+                    }
+                }
+            }
+            return types;
+        }
+
+        public void AddPurchase(Purchase purchase, string currentUser)
+        {
+            using (var cn = new SqlConnection(Settings.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("PurchaseInsert", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter param = new SqlParameter("@PurchaseId", SqlDbType.Int);
+                param.Direction = ParameterDirection.Output;
+
+                cmd.Parameters.Add(param);
+
+                cmd.Parameters.AddWithValue("@PurchaseTypeId", purchase.PurchaseTypeId);
+                cmd.Parameters.AddWithValue("@PurchasePrice", purchase.PurchasePrice);
+                cmd.Parameters.AddWithValue("@PurchaseDate", purchase.PurchaseDate = DateTime.Today);
+                cmd.Parameters.AddWithValue("@UserId", purchase.UserId = currentUser);
+
+                cn.Open();
+
+                cmd.ExecuteNonQuery();
+
+                purchase.PurchaseId = (int)param.Value;
+            }
+        }
+
+        public List<Purchase> GetPurchaseIds()
+        {
+
+            List<Purchase> purchases = new List<Purchase>();
+
+            using (var cn = new SqlConnection(Settings.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("GetPurchaseIds", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cn.Open();
+
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        Purchase row = new Purchase();
+
+                        row.PurchaseId = (int)dr["PurchaseId"];
+
+                        purchases.Add(row);
+
+                    }
+                }
+            }
+            return purchases;
+        }
+
+        public IEnumerable<SalesReport> SalesReport(SalesReportParameters parameters)
+        {
+            List<SalesReport> sales = new List<SalesReport>();
+
+            using (var cn = new SqlConnection(Settings.GetConnectionString()))
+            {
+                string query = "SELECT u.FirstName, SUM(p.PurchasePrice) AS TotalSales, COUNT(p.PurchaseId) AS TOTALVEHICLES " +
+                                "FROM Car c " +
+                                "JOIN Purchase p ON c.PurchaseId = p.PurchaseId " +
+                                "JOIN AspNetUsers u ON p.UserId = u.Id " +
+                                "WHERE 1 = 1 GROUP BY u.FirstName ";
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = cn;
+
+                if (!string.IsNullOrEmpty(parameters.UserName))
+                {
+                    query += "AND u.FirstName Like @UserName ";
+                    cmd.Parameters.AddWithValue("@UserName", parameters.UserName + "%");
+                }
+
+                var stringToDate = parameters.ToDate.ToString();
+
+                if (!string.IsNullOrEmpty(stringToDate))
+                {
+                    query += "AND p.PurchaseDate <= @ToDate ";
+                    cmd.Parameters.AddWithValue("@ToDate", parameters.ToDate);
+                }
+
+                var stringFromDate = parameters.FromDate.ToString();
+
+                if (!string.IsNullOrEmpty(stringFromDate))
+                {
+                    query += "AND p.PurchaseDate >= @FromDate ";
+                    cmd.Parameters.AddWithValue("@FromDate", parameters.FromDate);
+                }
+
+                query += "ORDER BY TOTALVEHICLES DESC ";
+                cmd.CommandText = query;
+
+                cn.Open();
+
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+
+                        SalesReport row = new SalesReport();
+
+                        row.FirstName = dr["FirstName"].ToString();
+                        row.TotalSales = (decimal)dr["TotalSales"];
+                        row.TotalVehicles = (int)dr["TotalVehicles"];
+
+                        sales.Add(row);
+                    }
+                }
+            }
+
+            return sales;
 
         }
 

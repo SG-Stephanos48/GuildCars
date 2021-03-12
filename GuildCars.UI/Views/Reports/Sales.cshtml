@@ -1,7 +1,103 @@
-﻿
+﻿@model IEnumerable<GuildCars.Models.Queries.SalesReport>
+
 @{
     ViewBag.Title = "Sales";
 }
 
-<h2>Sales</h2>
+<div class="row">
 
+    <h2>Sales</h2>
+    <div class="span" style="border: 1px solid black">
+        <form id="reportForm" class="form-inline">
+            <div class="row">
+                <div class="col-md-4">
+                    <br />
+                    <div class="form-group">
+                        <label for="userName">User</label>
+                        <input type="text" class="form-control" id="userName">
+                        @*@Html.DropDownList("userName", new SelectList(Model, "UserName", "UserName"), "All", new { @class = "form-control" })*@
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="fromDate">From Date</label><br />
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fromDate">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="toDate">To Date</label><br />
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="toDate">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-4">
+                    <button id="btnSearch" onclick="report()" class="btn btn-default col-md-4">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<br />
+<div class="row">
+    <h2>Search Results</h2>
+    <div class="searchResults">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>User Name</th>
+                    <th>Total Sales</th>
+                    <th>Total Vehicles</th>
+                </tr>
+            </thead>
+            <tbody id="searchResults">
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#reportForm").submit(function (e) {
+                report();
+                return false;
+            });
+        });
+
+        function report() {
+            var params;
+
+            params = 'userName=' + $('#userName').val() + '&fromDate=' + $('#fromDate').val() + '&toDate=' + $('#toDate').val();
+
+            $.ajax({
+                type: 'GET',
+                url: 'https://localhost:44313/api/reports/salesreport?' + params,
+                success: function (results) {
+                    $('#searchResults').empty();
+
+                    $.each(results, function (index, sales) {
+                        var html =
+                            '<tr>' +
+                            '<td>' + sales.FirstName + '</td>' +
+                            '<td>' + sales.TotalSales + '</td>' +
+                            '<td>' + sales.TotalVehicles + '</td>' +
+                            '</tr>';
+
+                            $('#searchResults').append(html.toString());
+                    });
+
+                },
+                error: function () {
+                    alert('Error performing search, try again later!')
+                }
+            });
+        }
+    </script>
+}

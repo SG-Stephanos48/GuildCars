@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace GuildCars.UI.Controllers
 {
+    //[Authorize(Roles = "Admin")]
     public class ReportsController : Controller
     {
         // GET: Reports
@@ -34,6 +35,7 @@ namespace GuildCars.UI.Controllers
 
         public ActionResult Sales()
         {
+            //var userName = "choose"; 
             return View();
         }
     }

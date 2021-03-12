@@ -58,8 +58,15 @@ namespace GuildCars.UI.Controllers
         public ActionResult Details(int CarId)
         {
             Car car = GuildCarsRepositoryFactory.GetRepository().GetById(CarId);
-
-            ViewBag.purchased = car.PurchaseDate;
+            
+            if (car.PurchaseDate != null)
+            {
+                ViewBag.purchased = car.PurchaseDate;
+            }
+            else
+            {
+                ViewBag.purchaseId = null;
+            }
 
             return View(car);
         }

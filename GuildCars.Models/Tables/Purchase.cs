@@ -12,7 +12,8 @@ namespace GuildCars.Models.Tables
         public int PurchaseId { get; set; }
         public int PurchaseTypeId { get; set; }
         public string PurchasePrice { get; set; }
-        public DateTime PuchaseDate { get; set; }
+        public DateTime PurchaseDate { get; set; }
+        public string UserId { get; set;  }
 
     }
 }

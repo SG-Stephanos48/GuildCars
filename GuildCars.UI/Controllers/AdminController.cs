@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace GuildCars.UI.Controllers
 {
-    [Authorize(Roles="Admin")]
+    //[Authorize(Roles="Admin")]
     public class AdminController : Controller
     {
         // GET: Admin
@@ -59,11 +59,17 @@ namespace GuildCars.UI.Controllers
         {
             var model = new VehicleAddViewModel();
 
-            var makeRepo = GuildCarsRepositoryFactory.GetRepository();
-            var modelRepo = GuildCarsRepositoryFactory.GetRepository();
+            var Repo = GuildCarsRepositoryFactory.GetRepository();
 
-            model.Make = new SelectList(makeRepo.GetMakes(), "MakeId", "MakeName");
-            model.Model = new SelectList(modelRepo.GetModels(), "ModelId", "ModelName");
+            model.Make = new SelectList(Repo.GetMakes(), "MakeId", "MakeName");
+            model.Model = new SelectList(Repo.GetModels(), "ModelId", "ModelName");
+            model.Interior = new SelectList(Repo.GetInteriors(), "Id", "InteriorName");
+            model.Transmission = new SelectList(Repo.GetTransmissions(), "Id", "TransName");
+            model.Color = new SelectList(Repo.GetColors(), "Id", "ColorName");
+            model.BodyStyle = new SelectList(Repo.GetBodyStyles(), "Id", "BodyStyleName");
+            model.CarType = new SelectList(Repo.GetCarTypes(), "Id", "CarTypeName");
+            model.States = new SelectList(Repo.GetStates(), "StatesId", "StatesName");
+
             model.Car = new Car();
 
             return View(model);
@@ -79,27 +85,77 @@ namespace GuildCars.UI.Controllers
             GuildCarsRepositoryFactory.GetRepository().Insert(car);
             //db.SaveChanges();
 
+            var model = new VehicleAddViewModel();
 
-            return View("EditVehicle");
+            var Repo = GuildCarsRepositoryFactory.GetRepository();
+
+            model.Make = new SelectList(Repo.GetMakes(), "MakeId", "MakeName");
+            model.Model = new SelectList(Repo.GetModels(), "ModelId", "ModelName");
+            model.Interior = new SelectList(Repo.GetInteriors(), "Id", "InteriorName");
+            model.Transmission = new SelectList(Repo.GetTransmissions(), "Id", "TransName");
+            model.Color = new SelectList(Repo.GetColors(), "Id", "ColorName");
+            model.BodyStyle = new SelectList(Repo.GetBodyStyles(), "Id", "BodyStyleName");
+            model.CarType = new SelectList(Repo.GetCarTypes(), "Id", "CarTypeName");
+            model.States = new SelectList(Repo.GetStates(), "StatesId", "StatesName");
+
+            model.Car = new Car();
+
+            return View("AddVehicle");
             //return Created($"api/Dvds1/{dvd.DvdId})", dvd);
             //return null;
             //return CreatedAtRoute("DefaultApi", new { id = dvd.DvdId }, dvd);
         }
 
-        public ActionResult EditVehicle()
+        public ActionResult EditVehicle(int id)
         {
+
+            var Repo = GuildCarsRepositoryFactory.GetRepository();
+
+            var cars = Repo.GetById(id);
+
             var model = new VehicleAddViewModel();
-
-            var makeRepo = GuildCarsRepositoryFactory.GetRepository();
-            var modelRepo = GuildCarsRepositoryFactory.GetRepository();
-
-            model.Make = new SelectList(makeRepo.GetMakes(), "MakeId", "MakeName");
-            model.Model = new SelectList(modelRepo.GetModels(), "ModelId", "ModelName");
+            
+            model.Car = cars;
+            model.Make = new SelectList(Repo.GetMakes(), "MakeId", "MakeName");
+            model.Model = new SelectList(Repo.GetModels(), "ModelId", "ModelName");
+            model.Interior = new SelectList(Repo.GetInteriors(), "Id", "InteriorName");
+            model.Transmission = new SelectList(Repo.GetTransmissions(), "Id", "TransName");
+            model.Color = new SelectList(Repo.GetColors(), "Id", "ColorName");
+            model.BodyStyle = new SelectList(Repo.GetBodyStyles(), "Id", "BodyStyleName");
+            model.CarType = new SelectList(Repo.GetCarTypes(), "Id", "CarTypeName");
+            model.States = new SelectList(Repo.GetStates(), "StatesId", "StatesName");
             model.Car = new Car();
 
             return View(model);
         }
 
+
+        public ActionResult UpdateCar(Car car)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                //return BadRequest(ModelState);
+            }
+
+            GuildCarsRepositoryFactory.GetRepository().Update(car);
+
+            var model = new VehicleAddViewModel();
+
+            var Repo = GuildCarsRepositoryFactory.GetRepository();
+
+            model.Make = new SelectList(Repo.GetMakes(), "MakeId", "MakeName");
+            model.Model = new SelectList(Repo.GetModels(), "ModelId", "ModelName");
+            model.Interior = new SelectList(Repo.GetInteriors(), "Id", "InteriorName");
+            model.Transmission = new SelectList(Repo.GetTransmissions(), "Id", "TransName");
+            model.Color = new SelectList(Repo.GetColors(), "Id", "ColorName");
+            model.BodyStyle = new SelectList(Repo.GetBodyStyles(), "Id", "BodyStyleName");
+            model.CarType = new SelectList(Repo.GetCarTypes(), "Id", "CarTypeName");
+            model.States = new SelectList(Repo.GetStates(), "StatesId", "StatesName");
+            model.Car = new Car();
+
+            return View(model);
+        }
 
         public ActionResult AddMake()
         {

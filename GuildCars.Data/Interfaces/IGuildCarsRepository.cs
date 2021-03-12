@@ -19,6 +19,7 @@ namespace GuildCars.Data.Interfaces
         IEnumerable<SearchItem> SearchNew(CarSearchParameters parameters);
         IEnumerable<SearchItem> SearchUsed(CarSearchParameters parameters);
         IEnumerable<SearchItem> SearchSales(CarSearchParameters parameters);
+        IEnumerable<SalesReport> SalesReport(SalesReportParameters parameters);
         void ContactUs(string VIN);
         void ContactInsert(Contact contact);
         List<Special> GetSpecials();
@@ -36,6 +37,16 @@ namespace GuildCars.Data.Interfaces
         void AddUserRole(string roleId);
         void EditUser(User user);
         void EditUserRole(string userId, string roleId);
-
+        List<State> GetStates();
+        List<PurchaseType> GetPurchaseTypes();
+        void AddPurchase(Purchase purchase, string currentUser);
+        void UpdatePurchaseStatus(int carId, int purchaseId);
+        void ContactInsert1(Contact contact, int purchaseId);
+        List<Purchase> GetPurchaseIds();
+        List<Interior> GetInteriors();
+        List<Color> GetColors();
+        List<BodyStyle> GetBodyStyles();
+        List<Transmission> GetTransmissions();
+        List<CarType> GetCarTypes();
     }
 }

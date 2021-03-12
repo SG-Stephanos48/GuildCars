@@ -45,13 +45,19 @@
     <Compile Include="Queries\CarSearchParameters.cs" />
     <Compile Include="Queries\CarShortItem.cs" />
     <Compile Include="Queries\FeaturedVehicleItem.cs" />
+    <Compile Include="Queries\SalesReport.cs" />
+    <Compile Include="Queries\SalesReportParameters.cs" />
     <Compile Include="Queries\SearchItem.cs" />
     <Compile Include="Queries\SearchItemPurchase.cs" />
     <Compile Include="Queries\SpecialList.cs" />
     <Compile Include="Queries\VehicleDetails.cs" />
     <Compile Include="Queries\VehicleReport.cs" />
+    <Compile Include="Tables\BodyStyle.cs" />
     <Compile Include="Tables\Car.cs" />
+    <Compile Include="Tables\CarType.cs" />
+    <Compile Include="Tables\Color.cs" />
     <Compile Include="Tables\Contact.cs" />
+    <Compile Include="Tables\Interior.cs" />
     <Compile Include="Tables\Make.cs" />
     <Compile Include="Tables\Model.cs" />
     <Compile Include="Tables\Purchase.cs" />
@@ -59,6 +65,7 @@
     <Compile Include="Tables\Role.cs" />
     <Compile Include="Tables\Special.cs" />
     <Compile Include="Tables\State.cs" />
+    <Compile Include="Tables\Transmission.cs" />
     <Compile Include="Tables\User.cs" />
     <Compile Include="Tables\UserRole.cs" />
   </ItemGroup>

@@ -133,5 +133,29 @@ namespace GuildCars.UI.Controllers
             }
         }
 
+        [Route("api/reports/salesreport")]
+        [AcceptVerbs("GET")]
+        public IHttpActionResult SalesReport(DateTime? toDate, DateTime? fromDate, string userName)
+        {
+            var repo = GuildCarsRepositoryFactory.GetRepository();
+
+            try
+            {
+                var parameters = new SalesReportParameters
+                {
+                    UserName = userName,
+                    ToDate = toDate,
+                    FromDate = fromDate
+                };
+
+                var result = repo.SalesReport(parameters);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

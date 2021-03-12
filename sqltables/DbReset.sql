@@ -88,4 +88,50 @@ BEGIN
 	INSERT INTO AspNetUserRoles(UserId, RoleId)
 	VALUES('00000000-0000-0000-0000-000000000000', 1), ('fe110d49-6edb-4012-a0cb-b5813a1c9c91', 1), ('9d1561ae-8a32-4c98-9208-9660fbe90345', 2), ('b7ac5228-aba7-4002-83bf-b3a4031fa32d', 3);
 
+	SET IDENTITY_INSERT CarType ON
+
+	INSERT INTO CarType (Id, CarTypeName)
+	VALUES (1, 'New'),
+		(2, 'Used')
+
+	SET IDENTITY_INSERT CarType OFF
+
+	SET IDENTITY_INSERT Color ON
+
+	INSERT INTO Color (Id, ColorName)
+	VALUES (1, 'Red'),
+		(2, 'Grey'),
+		(3, 'Black'),
+		(4, 'White')
+
+	SET IDENTITY_INSERT Color OFF
+
+	SET IDENTITY_INSERT Interior ON
+
+	INSERT INTO Interior (Id, InteriorName)
+	VALUES (1, 'Tan'),
+		(2, 'Grey'),
+		(3, 'Black'),
+		(4, 'White')
+
+	SET IDENTITY_INSERT Interior OFF
+
+	SET IDENTITY_INSERT BodyStyle ON
+
+	INSERT INTO BodyStyle (Id, BodyStyleName)
+	VALUES (1, 'Car'),
+		(2, 'SUV'),
+		(3, 'Van'),
+		(4, 'Truck')
+
+	SET IDENTITY_INSERT BodyStyle OFF
+
+	SET IDENTITY_INSERT Transmission ON
+
+	INSERT INTO Transmission (Id, TransName)
+	VALUES (1, 'Manual'),
+		(2, 'Auto')
+
+	SET IDENTITY_INSERT Transmission OFF
+
 END
