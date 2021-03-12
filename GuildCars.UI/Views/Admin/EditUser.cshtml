@@ -11,6 +11,8 @@
         <br />
         @using (Html.BeginForm("EditUserPost", "Admin", FormMethod.Post, new { id = "frmEditUser" }))
         {
+            @Html.ValidationSummary()
+            @Html.HiddenFor(m => m.User.Id)
             <div class="col-md-6">
                 <div class="form-group">
                     <label>First Name</label>

@@ -17,12 +17,17 @@ namespace GuildCars.Models.Tables
         public int PurchaseId { get; set; }
         public DateTime PurchaseDate { get; set; }
         public int ContactId { get; set; }
-        public string CarType { get; set; }
-        public string BodyStyle { get; set; }
+        public int CarTypeId { get; set; }
+        public string CarTypeName { get; set; }
+        public int BodyStyleId { get; set; }
+        public string BodyStyleName { get; set; }
         public string MfgYear { get; set; }
-        public string Transmission { get; set; }
-        public string Color { get; set; }
-        public string Interior { get; set; }
+        public int TransId { get; set; }
+        public int ColorId { get; set; }
+        public int InteriorId { get; set; }
+        public string TransName { get; set; }
+        public string ColorName { get; set; }
+        public string InteriorName { get; set; }
         public string Mileage { get; set; }
         public string VIN { get; set; }
         public decimal MSRP { get; set; }

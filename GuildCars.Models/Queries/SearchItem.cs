@@ -17,15 +17,15 @@ namespace GuildCars.Models.Queries
 
         public string ModelName { get; set; }
 
-        public string BodyStyle { get; set; }
+        public string BodyStyleName { get; set; }
 
-        public string CarType { get; set; }
+        public string CarTypeName { get; set; }
 
-        public string Transmission { get; set; }
+        public string TransName { get; set; }
 
-        public string Color { get; set; }
+        public string ColorName { get; set; }
 
-        public string Interior { get; set; }
+        public string InteriorName { get; set; }
 
         public string Mileage { get; set; }
 

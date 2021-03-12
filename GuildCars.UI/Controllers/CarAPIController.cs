@@ -157,5 +157,25 @@ namespace GuildCars.UI.Controllers
             }
         }
 
+        [Route("api/speicals/searchspecials")]
+        [AcceptVerbs("GET")]
+        public IHttpActionResult GetSpecials()
+        {
+            var repo = GuildCarsRepositoryFactory.GetRepository();
+
+            try
+            {
+                var result = repo.GetSpecials();
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+
+            }
+        }
+
     }
 }

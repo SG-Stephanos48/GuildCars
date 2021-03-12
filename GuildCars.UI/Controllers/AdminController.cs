@@ -100,22 +100,26 @@ namespace GuildCars.UI.Controllers
 
             model.Car = new Car();
 
-            return View("AddVehicle");
+            List<Car> pass = new List<Car>();
+
+            pass = Repo.GetAll();
+
+            return View("Vehicles", pass);
             //return Created($"api/Dvds1/{dvd.DvdId})", dvd);
             //return null;
             //return CreatedAtRoute("DefaultApi", new { id = dvd.DvdId }, dvd);
         }
 
-        public ActionResult EditVehicle(int id)
+        public ActionResult EditVehicle(int carId)
         {
 
             var Repo = GuildCarsRepositoryFactory.GetRepository();
 
-            var cars = Repo.GetById(id);
+            var car = Repo.GetById(carId);
 
             var model = new VehicleAddViewModel();
             
-            model.Car = cars;
+            model.Car = car;
             model.Make = new SelectList(Repo.GetMakes(), "MakeId", "MakeName");
             model.Model = new SelectList(Repo.GetModels(), "ModelId", "ModelName");
             model.Interior = new SelectList(Repo.GetInteriors(), "Id", "InteriorName");
@@ -124,7 +128,6 @@ namespace GuildCars.UI.Controllers
             model.BodyStyle = new SelectList(Repo.GetBodyStyles(), "Id", "BodyStyleName");
             model.CarType = new SelectList(Repo.GetCarTypes(), "Id", "CarTypeName");
             model.States = new SelectList(Repo.GetStates(), "StatesId", "StatesName");
-            model.Car = new Car();
 
             return View(model);
         }
@@ -144,6 +147,10 @@ namespace GuildCars.UI.Controllers
 
             var Repo = GuildCarsRepositoryFactory.GetRepository();
 
+            List<Car> cars = new List<Car>();
+
+            cars = Repo.GetAll();
+
             model.Make = new SelectList(Repo.GetMakes(), "MakeId", "MakeName");
             model.Model = new SelectList(Repo.GetModels(), "ModelId", "ModelName");
             model.Interior = new SelectList(Repo.GetInteriors(), "Id", "InteriorName");
@@ -152,9 +159,9 @@ namespace GuildCars.UI.Controllers
             model.BodyStyle = new SelectList(Repo.GetBodyStyles(), "Id", "BodyStyleName");
             model.CarType = new SelectList(Repo.GetCarTypes(), "Id", "CarTypeName");
             model.States = new SelectList(Repo.GetStates(), "StatesId", "StatesName");
-            model.Car = new Car();
 
-            return View(model);
+            return View("Vehicles", cars);
+
         }
 
         public ActionResult AddMake()

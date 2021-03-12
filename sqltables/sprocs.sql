@@ -5,11 +5,17 @@ GO
 
 CREATE PROCEDURE CarSelectAll AS 
 BEGIN
-	SELECT c.CarId, m.MakeName, ma.ModelName, c.CarType, c.BodyStyle, c.MfgYear, c.Transmission, c.Color, c.Interior, c.Mileage, c.VIN, c.MSRP, c.SalesPrice, c.CarDescription, c.ImageFileName, p.PurchaseDate, c.Feature
+	SELECT c.CarId, m.MakeName, ma.ModelName, ct.CarTypeName, b.BodyStyleName, c.MfgYear, t.TransName, co.ColorName, i.InteriorName, c.Mileage, c.VIN, c.MSRP, c.SalesPrice, c.CarDescription, c.ImageFileName, p.PurchaseDate, c.Feature
 	FROM Car c
 		JOIN Make m ON c.MakeId = m.MakeId
 		JOIN Model ma ON c.ModelId = ma.ModelId
 		JOIN Purchase p ON c.PurchaseId = p.PurchaseId
+		JOIN Interior i ON c.InteriorId = i.Id
+		JOIN BodyStyle b ON c.BodyStyleId = b.Id
+		JOIN CarType ct ON c.CarTypeId = ct.Id
+		JOIN Color co ON c.ColorId = co.Id
+		JOIN Transmission t ON c.TransId = t.Id
+
 
 END
 
@@ -24,10 +30,15 @@ CREATE PROCEDURE CarSelect (
 	@carId int
 )AS 
 BEGIN
-	SELECT c.CarId, m.MakeName, ma.ModelName, c.CarType, c.BodyStyle, c.MfgYear, c.Transmission, c.Color, c.Interior, c.Mileage, c.VIN, c.MSRP, c.SalesPrice, c.CarDescription, c.ImageFileName, p.PurchaseDate, c.Feature
+	SELECT c.CarId, m.MakeName, ma.ModelName, ct.CarTypeName, b.BodyStyleName, c.MfgYear, t.TransName, co.ColorName, i.InteriorName, c.Mileage, c.VIN, c.MSRP, c.SalesPrice, c.CarDescription, c.ImageFileName, p.PurchaseDate, c.Feature
 	FROM Car c
 		JOIN Make m ON c.MakeId = m.MakeId
 		JOIN Model ma ON c.ModelId = ma.ModelId
+		JOIN Interior i ON c.InteriorId = i.Id
+		JOIN BodyStyle b ON c.BodyStyleId = b.Id
+		JOIN CarType ct ON c.CarTypeId = ct.Id
+		JOIN Color co ON c.ColorId = co.Id
+		JOIN Transmission t ON c.TransId = t.Id
 		FULL JOIN Purchase p ON c.PurchaseId = p.PurchaseId
 	WHERE c.CarId = @carId
 END
@@ -43,13 +54,12 @@ CREATE PROCEDURE CarInsert (
 	@CarId int output,
 	@MakeId int,
 	@ModelId int,
-	@PurchaseId int,
-	@CarType nvarchar(50),
-	@BodyStyle nvarchar(50),
+	@CarTypeId int,
+	@BodyStyleId int,
 	@MfgYear nvarchar(50),
-	@Transmission nvarchar(50),
-	@Color nvarchar(50),
-	@Interior nvarchar(50),
+	@TransId int,
+	@ColorId int,
+	@InteriorId int,
 	@Mileage nvarchar(50),
 	@VIN nvarchar(50),
 	@MSRP nvarchar(50),
@@ -60,8 +70,8 @@ CREATE PROCEDURE CarInsert (
 
 ) AS
 BEGIN
-	INSERT INTO Car (MakeId, ModelId, CarType, BodyStyle, MfgYear, Transmission, Color, Interior, Mileage, VIN, MSRP, SalesPrice, CarDescription, ImageFileName, PurchaseId, Feature)
-	VALUES (@MakeId, @ModelId, @CarType, @BodyStyle, @MfgYear, @Transmission, @Color, @Interior, @Mileage, @VIN, @MSRP, @SalesPrice, @CarDescription, @ImageFileName, @PurchaseId, @Feature);
+	INSERT INTO Car (MakeId, ModelId, CarTypeId, BodyStyleId, MfgYear, TransId, ColorId, InteriorId, Mileage, VIN, MSRP, SalesPrice, CarDescription, ImageFileName, Feature)
+	VALUES (@MakeId, @ModelId, @CarTypeId, @BodyStyleId, @MfgYear, @TransId, @ColorId, @InteriorId, @Mileage, @VIN, @MSRP, @SalesPrice, @CarDescription, @ImageFileName, @Feature);
 	
 	SET @CarId = SCOPE_IDENTITY();
 END
@@ -77,13 +87,12 @@ CREATE PROCEDURE CarUpdate (
 	@CarId int output,
 	@MakeId int,
 	@ModelId int,
-	@PurchaseId int,
-	@CarType nvarchar(50),
-	@BodyStyle nvarchar(50),
+	@CarTypeId int,
+	@BodyStyleId int,
 	@MfgYear nvarchar(50),
-	@Transmission nvarchar(50),
-	@Color nvarchar(50),
-	@Interior nvarchar(50),
+	@TransId int,
+	@ColorId int,
+	@InteriorId int,
 	@Mileage nvarchar(50),
 	@VIN nvarchar(50),
 	@MSRP nvarchar(50),
@@ -97,19 +106,18 @@ BEGIN
 	UPDATE Car SET 
 		MakeId = @MakeId, 
 		ModelId = @ModelId, 
-		CarType = @CarType, 
-		BodyStyle = @BodyStyle, 
+		CarTypeId = @CarTypeId, 
+		BodyStyleId = @BodyStyleId, 
 		MfgYear = @MfgYear, 
-		Transmission = @Transmission, 
-		Color = @Color, 
-		Interior = @Interior, 
+		TransId = @TransId, 
+		ColorId = @ColorId, 
+		InteriorId = @InteriorId, 
 		Mileage = @Mileage, 
 		VIN = @VIN, 
 		MSRP = @MSRP, 
 		SalesPrice = @SalesPrice, 
 		CarDescription = @CarDescription, 
 		ImageFileName = @ImageFileName, 
-		PurchaseId = @PurchaseId, 
 		Feature = @Feature
 
 	WHERE CarId = @CarId
@@ -143,11 +151,16 @@ GO
 
 CREATE PROCEDURE CarSelectRecent AS 
 BEGIN
-	SELECT TOP 5 c.CarId, m.MakeName, ma.ModelName, c.CarType, c.BodyStyle, c.MfgYear, c.Transmission, c.Color, c.Interior, c.Mileage, c.VIN, c.MSRP, c.SalesPrice, c.CarDescription, c.ImageFileName, p.PurchaseDate, c.Feature
+	SELECT TOP 5 c.CarId, m.MakeName, ma.ModelName, ct.CarTypeName, b.BodyStyleName, c.MfgYear, t.TransName, co.ColorName, i.InteriorName,  c.Mileage, c.VIN, c.MSRP, c.SalesPrice, c.CarDescription, c.ImageFileName, p.PurchaseDate, c.Feature
 	FROM Car c
 		JOIN Make m ON c.MakeId = m.MakeId
 		JOIN Model ma ON c.ModelId = ma.ModelId
 		JOIN Purchase p ON c.PurchaseId = p.PurchaseId
+		JOIN Interior i ON c.InteriorId = i.Id
+		JOIN BodyStyle b ON c.BodyStyleId = b.Id
+		JOIN CarType ct ON c.CarTypeId = ct.Id
+		JOIN Color co ON c.ColorId = co.Id
+		JOIN Transmission t ON c.TransId = t.Id
 	ORDER BY c.CarId DESC
 END
 
@@ -387,7 +400,7 @@ BEGIN
 	FROM Car c
 		JOIN Make m ON c.MakeId = m.MakeId
 		JOIN Model ma ON c.ModelId = ma.ModelId
-	WHERE c.CarType = 'New'
+	WHERE c.CarTypeId = 1
 	GROUP BY MfgYear, MakeName, ModelName
 
 END
@@ -405,7 +418,7 @@ BEGIN
 	FROM Car c
 		JOIN Make m ON c.MakeId = m.MakeId
 		JOIN Model ma ON c.ModelId = ma.ModelId
-	WHERE c.CarType = 'Used'
+	WHERE c.CarTypeId = 2
 	GROUP BY MfgYear, MakeName, ModelName
 
 END

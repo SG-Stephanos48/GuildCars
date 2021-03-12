@@ -51,12 +51,12 @@ namespace GuildCars.Data.ADO
                         currentRow.MakeName = dr["MakeName"].ToString();
                         currentRow.ModelName = dr["ModelName"].ToString();
                         currentRow.PurchaseDate = (DateTime)dr["PurchaseDate"];
-                        currentRow.CarType = dr["CarType"].ToString();
-                        currentRow.BodyStyle = dr["BodyStyle"].ToString();
+                        currentRow.CarTypeName = dr["CarTypeName"].ToString();
+                        currentRow.BodyStyleName = dr["BodyStyleName"].ToString();
                         currentRow.MfgYear = dr["MfgYear"].ToString();
-                        currentRow.Transmission = dr["Transmission"].ToString();
-                        currentRow.Color = dr["Color"].ToString();
-                        currentRow.Interior = dr["Interior"].ToString();
+                        currentRow.TransName = dr["TransName"].ToString();
+                        currentRow.ColorName = dr["ColorName"].ToString();
+                        currentRow.InteriorName = dr["InteriorName"].ToString();
                         currentRow.Mileage = dr["Mileage"].ToString();
                         currentRow.VIN = dr["VIN"].ToString();
                         currentRow.MSRP = (decimal)dr["MSRP"];
@@ -97,12 +97,12 @@ namespace GuildCars.Data.ADO
                         car.MakeName = dr["MakeName"].ToString();
                         car.ModelName = dr["ModelName"].ToString();
                         //car.PurchaseDate = (DateTime)dr["PurchaseDate"];
-                        car.CarType = dr["CarType"].ToString();
-                        car.BodyStyle = dr["BodyStyle"].ToString();
+                        car.CarTypeName = dr["CarTypeName"].ToString();
+                        car.BodyStyleName = dr["BodyStyleName"].ToString();
                         car.MfgYear = dr["MfgYear"].ToString();
-                        car.Transmission = dr["Transmission"].ToString();
-                        car.Color = dr["Color"].ToString();
-                        car.Interior = dr["Interior"].ToString();
+                        car.TransName = dr["TransName"].ToString();
+                        car.ColorName = dr["ColorName"].ToString();
+                        car.InteriorName = dr["InteriorName"].ToString();
                         car.Mileage = dr["Mileage"].ToString();
                         car.VIN = dr["VIN"].ToString();
                         car.MSRP = (decimal)dr["MSRP"];
@@ -160,13 +160,13 @@ namespace GuildCars.Data.ADO
 
                 cmd.Parameters.AddWithValue("@MakeId", car.MakeId);
                 cmd.Parameters.AddWithValue("@ModelId", car.ModelId);
-                cmd.Parameters.AddWithValue("@PurchaseId", car.PurchaseId);
-                cmd.Parameters.AddWithValue("@CarType", car.CarType);
-                cmd.Parameters.AddWithValue("@BodyStyle", car.BodyStyle);
+                //cmd.Parameters.AddWithValue("@PurchaseId", car.PurchaseId = 0);
+                cmd.Parameters.AddWithValue("@CarTypeId", car.CarTypeId);
+                cmd.Parameters.AddWithValue("@BodyStyleId", car.BodyStyleId);
                 cmd.Parameters.AddWithValue("@MfgYear", car.MfgYear);
-                cmd.Parameters.AddWithValue("@Transmission", car.Transmission);
-                cmd.Parameters.AddWithValue("@Color", car.Color);
-                cmd.Parameters.AddWithValue("@Interior", car.Interior);
+                cmd.Parameters.AddWithValue("@TransId", car.TransId);
+                cmd.Parameters.AddWithValue("@ColorId", car.ColorId);
+                cmd.Parameters.AddWithValue("@InteriorId", car.InteriorId);
                 cmd.Parameters.AddWithValue("@Mileage", car.Mileage);
                 cmd.Parameters.AddWithValue("@VIN", car.VIN);
                 cmd.Parameters.AddWithValue("@MSRP", car.MSRP);
@@ -190,22 +190,23 @@ namespace GuildCars.Data.ADO
                 SqlCommand cmd = new SqlCommand("CarUpdate", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
+                cmd.Parameters.AddWithValue("@CarId", car.CarId);
                 cmd.Parameters.AddWithValue("@MakeId", car.MakeId);
                 cmd.Parameters.AddWithValue("@ModelId", car.ModelId);
-                cmd.Parameters.AddWithValue("@PurchaseId", car.PurchaseId);
-                cmd.Parameters.AddWithValue("@CarType", car.CarType);
-                cmd.Parameters.AddWithValue("@BodyStyle", car.BodyStyle);
+                //cmd.Parameters.AddWithValue("@PurchaseId", car.PurchaseId);
+                cmd.Parameters.AddWithValue("@CarTypeId", car.CarTypeId);
+                cmd.Parameters.AddWithValue("@BodyStyleId", car.BodyStyleId);
                 cmd.Parameters.AddWithValue("@MfgYear", car.MfgYear);
-                cmd.Parameters.AddWithValue("@Transmission", car.Transmission);
-                cmd.Parameters.AddWithValue("@Color", car.Color);
-                cmd.Parameters.AddWithValue("@Interior", car.Interior);
+                cmd.Parameters.AddWithValue("@TransId", car.TransId);
+                cmd.Parameters.AddWithValue("@ColorId", car.ColorId);
+                cmd.Parameters.AddWithValue("@InteriorId", car.InteriorId);
                 cmd.Parameters.AddWithValue("@Mileage", car.Mileage);
                 cmd.Parameters.AddWithValue("@VIN", car.VIN);
                 cmd.Parameters.AddWithValue("@MSRP", car.MSRP);
                 cmd.Parameters.AddWithValue("@SalesPrice", car.SalesPrice);
                 cmd.Parameters.AddWithValue("@CarDescription", car.CarDescription);
                 cmd.Parameters.AddWithValue("@Feature", car.Feature);
-                cmd.Parameters.AddWithValue("@ImageFileName", car.ImageFileName);
+                cmd.Parameters.AddWithValue("@ImageFileName", car.ImageFileName = "car.jpg");
 
                 cn.Open();
 
@@ -320,12 +321,17 @@ namespace GuildCars.Data.ADO
 
             using (var cn = new SqlConnection(Settings.GetConnectionString()))
             {
-                string query = "SELECT TOP 20 c.CarId, c.MfgYear, m.MakeName, ma.ModelName, c.BodyStyle, c.CarType, c.Transmission, c.Color, c.Interior, c.Mileage, c.VIN, c.SalesPrice, c.MSRP, c.ImageFileName, c.Feature, p.PurchaseDate " +
+                string query = "SELECT TOP 20 c.CarId, c.MfgYear, m.MakeName, ma.ModelName, b.BodyStyleName, ct.CarTypeName, t.TransName, co.ColorName, i.InteriorName, c.Mileage, c.VIN, c.SalesPrice, c.MSRP, c.ImageFileName, c.Feature, p.PurchaseDate " +
                                 "FROM Car c " +
                                     "JOIN Make m ON c.MakeId = m.MakeId " +
                                     "JOIN Model ma ON c.ModelId = ma.ModelId " +
+                                    "JOIN BodyStyle b ON c.BodyStyleId = b.Id " +
+                                    "JOIN CarType ct ON c.CarTypeId = ct.Id " +
+                                    "JOIN Transmission t ON c.TransId = t.Id " +
+                                    "JOIN Color co ON c.ColorId = co.Id " +
+                                    "JOIN Interior i ON c.InteriorId = i.Id " +
                                     "FULL JOIN Purchase p ON c.PurchaseId = p.PurchaseId " +
-                                "WHERE 1 = 1 AND CarType = 'New' ";
+                                "WHERE 1 = 1 AND CarTypeId = 1 ";
 
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = cn;
@@ -375,11 +381,11 @@ namespace GuildCars.Data.ADO
                         row.MfgYear = dr["MfgYear"].ToString();
                         row.MakeName = dr["MakeName"].ToString();
                         row.ModelName = dr["ModelName"].ToString();
-                        row.CarType = dr["CarType"].ToString();
-                        row.BodyStyle = dr["BodyStyle"].ToString();
-                        row.Transmission = dr["Transmission"].ToString();
-                        row.Color = dr["Color"].ToString();
-                        row.Interior = dr["Interior"].ToString();
+                        row.CarTypeName = dr["CarTypeName"].ToString();
+                        row.BodyStyleName = dr["BodyStyleName"].ToString();
+                        row.TransName = dr["TransName"].ToString();
+                        row.ColorName = dr["ColorName"].ToString();
+                        row.InteriorName = dr["InteriorName"].ToString();
                         row.Mileage = dr["Mileage"].ToString();
                         row.VIN = dr["VIN"].ToString();
                         row.SalesPrice = (decimal)dr["SalesPrice"];
@@ -403,12 +409,17 @@ namespace GuildCars.Data.ADO
 
             using (var cn = new SqlConnection(Settings.GetConnectionString()))
             {
-                string query = "SELECT TOP 20 c.CarId, c.MfgYear, m.MakeName, ma.ModelName, c.BodyStyle, c.CarType, c.Transmission, c.Color, c.Interior, c.Mileage, c.VIN, c.SalesPrice, c.MSRP, c.ImageFileName, c.Feature, p.PurchaseDate " +
+                string query = "SELECT TOP 20 c.CarId, c.MfgYear, m.MakeName, ma.ModelName, b.BodyStyleName, ct.CarTypeName, t.TransName, co.ColorName, i.InteriorName, c.Mileage, c.VIN, c.SalesPrice, c.MSRP, c.ImageFileName, c.Feature, p.PurchaseDate " +
                                 "FROM Car c " +
                                     "JOIN Make m ON c.MakeId = m.MakeId " +
                                     "JOIN Model ma ON c.ModelId = ma.ModelId " +
+                                    "JOIN BodyStyle b ON c.BodyStyleId = b.Id " +
+                                    "JOIN CarType ct ON c.CarTypeId = ct.Id " +
+                                    "JOIN Transmission t ON c.TransId = t.Id " +
+                                    "JOIN Color co ON c.ColorId = co.Id " +
+                                    "JOIN Interior i ON c.InteriorId = i.Id " +
                                     "FULL JOIN Purchase p ON c.PurchaseId = p.PurchaseId " +
-                                "WHERE 1 = 1 AND CarType = 'Used'";
+                                "WHERE 1 = 1 AND CarTypeId = 2 ";
 
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = cn;
@@ -458,11 +469,11 @@ namespace GuildCars.Data.ADO
                         row.MfgYear = dr["MfgYear"].ToString();
                         row.MakeName = dr["MakeName"].ToString();
                         row.ModelName = dr["ModelName"].ToString();
-                        row.CarType = dr["CarType"].ToString();
-                        row.BodyStyle = dr["BodyStyle"].ToString();
-                        row.Transmission = dr["Transmission"].ToString();
-                        row.Color = dr["Color"].ToString();
-                        row.Interior = dr["Interior"].ToString();
+                        row.CarTypeName = dr["CarTypeName"].ToString();
+                        row.BodyStyleName = dr["BodyStyleName"].ToString();
+                        row.TransName = dr["TransName"].ToString();
+                        row.ColorName = dr["ColorName"].ToString();
+                        row.InteriorName = dr["InteriorName"].ToString();
                         row.Mileage = dr["Mileage"].ToString();
                         row.VIN = dr["VIN"].ToString();
                         row.SalesPrice = (decimal)dr["SalesPrice"];
@@ -486,10 +497,15 @@ namespace GuildCars.Data.ADO
 
             using (var cn = new SqlConnection(Settings.GetConnectionString()))
             {
-                string query = "SELECT TOP 20 c.CarId, c.MfgYear, m.MakeName, ma.ModelName, c.BodyStyle, c.CarType, c.Transmission, c.Color, c.Interior, c.Mileage, c.VIN, c.SalesPrice, c.MSRP, c.ImageFileName, c.Feature, c.PurchaseId " +
+                string query = "SELECT TOP 20 c.CarId, c.MfgYear, m.MakeName, ma.ModelName, b.BodyStyleName, ct.CarTypeName, t.TransName, co.ColorName, i.InteriorName, c.Mileage, c.VIN, c.SalesPrice, c.MSRP, c.ImageFileName, c.Feature, c.PurchaseId " +
                                 "FROM Car c " +
                                     "JOIN Make m ON c.MakeId = m.MakeId " +
                                     "JOIN Model ma ON c.ModelId = ma.ModelId " +
+                                    "JOIN BodyStyle b ON c.BodyStyleId = b.Id " +
+                                    "JOIN CarType ct ON c.CarTypeId = ct.Id " +
+                                    "JOIN Transmission t ON c.TransId = t.Id " +
+                                    "JOIN Color co ON c.ColorId = co.Id " +
+                                    "JOIN Interior i ON c.InteriorId = i.Id " +
                                 "WHERE 1 = 1 AND PurchaseId IS NULL ";
 
                 SqlCommand cmd = new SqlCommand();
@@ -540,11 +556,11 @@ namespace GuildCars.Data.ADO
                         row.MfgYear = dr["MfgYear"].ToString();
                         row.MakeName = dr["MakeName"].ToString();
                         row.ModelName = dr["ModelName"].ToString();
-                        row.CarType = dr["CarType"].ToString();
-                        row.BodyStyle = dr["BodyStyle"].ToString();
-                        row.Transmission = dr["Transmission"].ToString();
-                        row.Color = dr["Color"].ToString();
-                        row.Interior = dr["Interior"].ToString();
+                        row.CarTypeName = dr["CarTypeName"].ToString();
+                        row.BodyStyleName = dr["BodyStyleName"].ToString();
+                        row.TransName = dr["TransName"].ToString();
+                        row.ColorName = dr["ColorName"].ToString();
+                        row.InteriorName = dr["InteriorName"].ToString();
                         row.Mileage = dr["Mileage"].ToString();
                         row.VIN = dr["VIN"].ToString();
                         row.SalesPrice = (decimal)dr["SalesPrice"];
@@ -568,12 +584,17 @@ namespace GuildCars.Data.ADO
 
             using (var cn = new SqlConnection(Settings.GetConnectionString()))
             {
-                string query = "SELECT TOP 20 c.CarId, c.MfgYear, m.MakeName, ma.ModelName, c.BodyStyle, c.CarType, c.Transmission, c.Color, c.Interior, c.Mileage, c.VIN, c.SalesPrice, c.MSRP, c.ImageFileName, c.Feature, c.PurchaseId " +
+                string query = "SELECT TOP 20 c.CarId, c.MfgYear, m.MakeName, ma.ModelName, b.BodyStyleName, ct.CarTypeName, t.TransName, co.ColorName, i.InteriorName, c.Mileage, c.VIN, c.SalesPrice, c.MSRP, c.ImageFileName, c.Feature, c.PurchaseId " +
                                 "FROM Car c" +
                                     "JOIN Make m ON c.MakeId = m.MakeId " +
                                     "JOIN Model ma ON c.ModelId = ma.ModelId " +
+                                    "JOIN BodyStyle b ON c.BodyStyleId = b.Id " +
+                                    "JOIN CarType ct ON c.CarTypeId = ct.Id " +
+                                    "JOIN Transmission t ON c.TransId = t.Id " +
+                                    "JOIN Color co ON c.ColorId = co.Id " +
+                                    "JOIN Interior i ON c.InteriorId = i.Id " +
                                     "FULL JOIN  Purchase p ON c.PurchaseId = p.PurchaseId " +
-                                "WHERE 1 = 1 AND p.PurchaseDate IS NULL";
+                                "WHERE 1 = 1 AND p.PurchaseDate IS NULL ";
 
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = cn;
@@ -623,11 +644,11 @@ namespace GuildCars.Data.ADO
                         row.MfgYear = dr["MfgYear"].ToString();
                         row.MakeName = dr["MakeName"].ToString();
                         row.ModelName = dr["ModelName"].ToString();
-                        row.CarType = dr["CarType"].ToString();
-                        row.BodyStyle = dr["BodyStyle"].ToString();
-                        row.Transmission = dr["Transmission"].ToString();
-                        row.Color = dr["Color"].ToString();
-                        row.Interior = dr["Interior"].ToString();
+                        row.CarTypeName = dr["CarTypeName"].ToString();
+                        row.BodyStyleName = dr["BodyStyleName"].ToString();
+                        row.TransName = dr["TransName"].ToString();
+                        row.ColorName = dr["ColorName"].ToString();
+                        row.InteriorName = dr["InteriorName"].ToString();
                         row.Mileage = dr["Mileage"].ToString();
                         row.VIN = dr["VIN"].ToString();
                         row.SalesPrice = (decimal)dr["SalesPrice"];
@@ -1244,7 +1265,7 @@ namespace GuildCars.Data.ADO
 
             using (var cn = new SqlConnection(Settings.GetConnectionString()))
             {
-                string query = "SELECT u.FirstName, SUM(p.PurchasePrice) AS TotalSales, COUNT(p.PurchaseId) AS TOTALVEHICLES " +
+                string query = "SELECT u.FirstName AS FirstName, SUM(p.PurchasePrice) AS TotalSales, COUNT(p.PurchaseId) AS TOTALVEHICLES " +
                                 "FROM Car c " +
                                 "JOIN Purchase p ON c.PurchaseId = p.PurchaseId " +
                                 "JOIN AspNetUsers u ON p.UserId = u.Id " +

@@ -43,9 +43,9 @@ namespace GuildCars.UI.Controllers
         public ActionResult PostPurchase(PurchaseAddViewModel pviewmodel)
         {
 
-            //var carId = @ViewBag.carid;
+            var carId = pviewmodel.Car.CarId;
 
-            var carId = 4;
+            //var carId = 4;
 
             var purchase = pviewmodel.Purchase;
 
@@ -69,7 +69,9 @@ namespace GuildCars.UI.Controllers
             GuildCarsRepositoryFactory.GetRepository().UpdatePurchaseStatus(carId, purchaseId);
             //db.SaveChanges();
 
-            return View("Index");
+            var model = GuildCarsRepositoryFactory.GetRepository().GetAll();
+
+            return View("Index", model);
             //return Created($"api/Dvds1/{dvd.DvdId})", dvd);
             //return null;
             //return CreatedAtRoute("DefaultApi", new { id = dvd.DvdId }, dvd);

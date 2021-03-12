@@ -15,7 +15,7 @@
                     <div class="form-group">
                         <label for="userName">User</label>
                         <input type="text" class="form-control" id="userName">
-                        @*@Html.DropDownList("userName", new SelectList(Model, "UserName", "UserName"), "All", new { @class = "form-control" })*@
+                        @*@Html.DropDownList("userName", new SelectList(Model, "FirstName", "FirstName"), "All", new { @class = "form-control" })*@
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -46,7 +46,7 @@
     <h2>Search Results</h2>
     <div class="searchResults">
 
-        <table>
+        <table class="table-bordered">
             <thead>
                 <tr>
                     <th>User Name</th>

@@ -32,11 +32,29 @@ textarea {
     text-align: center;
 }
 
-
-
 .logo-image {
     width: 55px;
     height: 55px;
 
-
 }
+
+.carousel-inner {
+    background-color: grey !important;
+    overflow: visible;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    margin-top: 50px;
+}
+
+.carousel-captions {
+    text-align: center;
+    
+}
+
+.carousel-slide {
+    background-color: grey !important;
+}
+

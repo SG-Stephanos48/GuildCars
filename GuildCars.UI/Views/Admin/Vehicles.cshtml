@@ -84,6 +84,7 @@
                     $('#searchResults').empty();
 
                     $.each(results, function (index, car) {
+                        var carId = car.CarId;
                         var html = 
                             '<div class="span" style="border: 1px solid black"> <br />' +
                             '<div class="row">' +
@@ -95,12 +96,12 @@
                             '<p class="col-md-offset-2"><img src="' + imagePath + car.ImageFileName + '" /></p>' +
                             '</div>' +
                             '<div class="col-md-3">' +
-                            '<p class="recentListing">' + 'Body Style:' + car.BodyStyle + '</p>' +
-                            '<p class="recentListing">' + '     Trans:' + car.Transmission + '</p>' +
-                            '<p class="recentListing">' + '     Color:' + car.Color + '</p>' +
+                            '<p class="recentListing">' + 'Body Style:' + car.BodyStyleName + '</p>' +
+                            '<p class="recentListing">' + '     Trans:' + car.TransName + '</p>' +
+                            '<p class="recentListing">' + '     Color:' + car.ColorName + '</p>' +
                             '</div>' +
                             '<div class="col-md-3">' +
-                            '<p class="recentListing">' + 'Interior:' + car.Interior + '</p>' +
+                            '<p class="recentListing">' + 'Interior:' + car.InteriorName + '</p>' +
                             '<p class="recentListing">' + ' Mileage:' + car.Mileage + '</p>' +
                             '<p class="recentListing">' + '    VIN#:' + car.VIN + '</p>' +
                             '</div>' +
@@ -111,7 +112,7 @@
                             '</div>' +
                             '<div class="row">' +
                             '<div class="col-md-offset-11">' +
-                            '<button class="btn btn-default"><a href="' + detailsPath + car.CarId + '">Edit</a></button>' +
+                            '<button class="btn btn-default"><a href="' + detailsPath + carId + '">Edit</a></button>' +
                             '</div>' +
                             '</div> <br />' +
                             '</div>' +

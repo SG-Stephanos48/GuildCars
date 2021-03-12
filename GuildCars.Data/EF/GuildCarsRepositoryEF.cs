@@ -219,12 +219,12 @@ namespace GuildCars.Data.EF
             carnew.CarId = car.CarId;
             carnew.MakeId = car.MakeId;
             carnew.ModelId = car.ModelId;
-            carnew.CarType = car.CarType;
+            /*carnew.CarType = car.CarType;
             carnew.BodyStyle = car.BodyStyle;
             carnew.MfgYear = car.MfgYear;
             carnew.Transmission = car.Transmission;
             carnew.Color = car.Color;
-            carnew.Interior = car.Interior;
+            carnew.Interior = car.Interior;*/
             carnew.Mileage = car.Mileage;
             carnew.VIN = car.VIN;
             carnew.MSRP = car.MSRP;

@@ -21,11 +21,49 @@
 -->
 
 <div class="container">
-    <div class="jumbotron" style="background-image: url(../../images/)">
-        <h1>BIG HUGE SALE</h1>
-        <p class="lead">      Come on down!</p>
-        <p></p>
+
+    <div id="carousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        @*<ol class="carousel-indicators">
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+            </ol>*@
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <img src="~/images/car.jpg" alt="...">
+                <div class="carousel-caption">
+                    <h3 id="title">Dodge Sprinter</h3>
+                    <p id="description">A Work Horse!</p>
+                </div>
+            </div>
+            <div class="item">
+                <img src="~/images/car.jpg" alt="...">
+                <div class="carousel-caption">
+                    <h3 id="title">Porsche Cayanne</h3>
+                    <p id="description">New Sexy Design!</p>
+                </div>
+            </div>
+            <div class="item">
+                <img src="~/images/car.jpg" alt="...">
+                <div class="carousel-caption">
+                    <h3 id="title">Chevy Corvette</h3>
+                    <p id="description">A ton of fun!</p>
+                </div>
+            </div>
+        </div>
     </div>
+
+    @*<div class="jumbotron" id="jumbo" style="background-image: url(../../images/)">
+            <div class="searchReults">
+                <h1 id="title">BIG HUGE SALE</h1>
+                <p id="description">      Come on down!</p>
+                <p></p>
+            </div>
+        </div>*@
+
     <hr />
     <div class="row">
         <div class="col-md-12">
@@ -50,3 +88,51 @@
 
 </div>
 
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#searchForm").submit(function (e) {
+                cycle();
+                return false;
+            });
+        });
+
+        function cycle() {
+
+            $.ajax({
+                type: 'GET',
+                url: 'https://localhost:44313/api/specials/searchspecials' + ,
+                success: function (results) {
+                    $('#searchResults').empty();
+
+                    $.each(results, function (index, special) {
+                        var html =
+                            '<text class="Title" >' + special.Title + '</text>'
+
+                        '<text class="Title" >' + special.Title + '</text>'
+                        $('#searchResults').append(html.toString());
+                    });
+
+                },
+                error: function () {
+                    alert('Error performing search, try again later!')
+                }
+            });
+        }
+    </script>
+
+    <script>
+        $('#myCarousel').on('slide.bs.carousel', function () {
+            // do something…
+        })
+    </script>
+
+    <script>
+
+        $('.carousel').carousel({
+            interval: 3000
+        })
+
+    </script>
+}

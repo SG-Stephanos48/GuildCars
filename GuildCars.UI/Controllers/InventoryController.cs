@@ -89,12 +89,12 @@ namespace GuildCars.UI.Controllers
 
             car1.MakeName = car.MakeName;
             car1.ModelName = car.ModelName;
-            car1.CarType = car.CarType;
-            car1.BodyStyle = car.BodyStyle;
+            car1.CarTypeName = car.CarTypeName;
+            car1.BodyStyleName = car.BodyStyleName;
             car1.MfgYear = car.MfgYear;
-            car1.Transmission = car.Transmission;
-            car1.Color = car.Color;
-            car1.Interior = car.Interior;
+            car1.TransName = car.TransName;
+            car1.ColorName = car.ColorName;
+            car1.InteriorName = car.InteriorName;
             car1.Mileage = car.Mileage;
             car1.VIN = car.VIN;
             car.MSRP = car.MSRP;

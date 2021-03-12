@@ -11,7 +11,8 @@
         <br />
         @using (Html.BeginForm("UpdateCar", "Admin", FormMethod.Post, new { id = "frmAddVehicle" }))
         {
-
+            @Html.ValidationSummary()
+            @Html.HiddenFor(m => m.Car.CarId)
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Make</label>
@@ -19,7 +20,7 @@
                 </div>
                 <div class="form-group">
                     <label>Type</label>
-                    @Html.DropDownListFor(m => m.Car.CarType, Model.CarType, new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.Car.CarTypeId, Model.CarType, new { @class = "form-control" })
                 </div>
                 <div class="form-group">
                     <label>Year</label>
@@ -27,7 +28,7 @@
                 </div>
                 <div class="form-group">
                     <label>Color</label>
-                    @Html.DropDownListFor(m => m.Car.Color, Model.Color, new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.Car.ColorId, Model.Color, new { @class = "form-control" })
                 </div>
                 <div class="form-group">
                     <label>Mileage</label>
@@ -45,15 +46,15 @@
                 </div>
                 <div class="form-group">
                     <label>BodyStyle:</label>
-                    @Html.DropDownListFor(m => m.Car.BodyStyle, Model.BodyStyle, new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.Car.BodyStyleId, Model.BodyStyle, new { @class = "form-control" })
                 </div>
                 <div class="form-group">
                     <label>Transmission</label>
-                    @Html.DropDownListFor(m => m.Car.Transmission, Model.Transmission, new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.Car.TransId, Model.Transmission, new { @class = "form-control" })
                 </div>
                 <div class="form-group">
                     <label>Interior</label>
-                    @Html.DropDownListFor(m => m.Car.Interior, Model.Interior, new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.Car.InteriorId, Model.Interior, new { @class = "form-control" })
                 </div>
                 <div class="form-group">
                     <label>VIN #</label>
@@ -70,6 +71,7 @@
                     @Html.TextAreaFor(m => m.Car.CarDescription, new { @class = "form-control" })
                 </div>
                 <div class="form-group">
+                    <img src="@Url.Content("~/Images/" + Model.Car.ImageFileName)" />
                     <label>Picture</label>
                     <input id="ImageFileName" name="ImageFileName" type="file" class="form-control" />
                 </div>

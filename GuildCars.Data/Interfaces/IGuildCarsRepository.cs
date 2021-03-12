@@ -48,5 +48,6 @@ namespace GuildCars.Data.Interfaces
         List<BodyStyle> GetBodyStyles();
         List<Transmission> GetTransmissions();
         List<CarType> GetCarTypes();
+
     }
 }
